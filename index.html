@@ -126,10 +126,11 @@
         <div class="av-core">
           <div class="av-pulse-ring"></div>
           <div class="av-pulse-ring" style="animation-delay:1.2s"></div>
-          <div class="av-face" id="robotAvatar">
-            <canvas id="robotCanvas"></canvas>
-          </div>
+          <div class="av-face" id="robotAvatar"></div>
         </div>
+
+        <!-- Robot canvas lifted out of av-face — sits at orbit-system level, z:9999 -->
+        <canvas id="robotCanvas"></canvas>
 
         <!-- Orbiting skill chips — each wrapper rotates, inner chip counter-rotates to stay upright -->
         <div class="chip-orbit co-1"><div class="tech-chip"><i class="fab fa-python"></i><span>Python</span></div></div>
