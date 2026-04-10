@@ -86,19 +86,22 @@ loader.load(
   (gltf) => {
     model = gltf.scene;
 
-    // ── Auto-fit: scale first, then re-measure to centre accurately ──
-    const box0   = new THREE.Box3().setFromObject(model);
-    const size0  = box0.getSize(new THREE.Vector3());
-    const maxDim = Math.max(size0.x, size0.y, size0.z);
+    // ── Auto-fit: measure all 3 axes, log them so we can see orientation ──
+    const box0  = new THREE.Box3().setFromObject(model);
+    const size0 = box0.getSize(new THREE.Vector3());
+    console.log('[robot] raw size x/y/z:', size0.x.toFixed(2), size0.y.toFixed(2), size0.z.toFixed(2));
 
-    const scale = 2.4 / maxDim;
+    // Scale so the TALLEST visual axis fills 78% of the frustum (2.2 / 2.8 units)
+    // Use the largest of Y and Z — whichever is "up" in the model's coordinate space
+    const heightDim = Math.max(size0.y, size0.z);
+    const scale = 2.2 / heightDim;
     model.scale.setScalar(scale);
 
-    // Re-measure bounding box AFTER scaling so centre is accurate in world space
-    scene.add(model);                                    // must be in scene for world bbox
+    // Re-measure AFTER scaling for accurate world-space centre
+    scene.add(model);
     const box1   = new THREE.Box3().setFromObject(model);
     const centre = box1.getCenter(new THREE.Vector3());
-    model.position.sub(centre);                          // shift model so bbox centre = origin
+    model.position.sub(centre);  // bbox centre → world origin
 
     // ── Material tweaks — tinted to match theme ──
     model.traverse((child) => {
