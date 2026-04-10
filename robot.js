@@ -85,19 +85,19 @@ loader.load(
   (gltf) => {
     model = gltf.scene;
 
-    // ── Auto-fit model to camera frustum ──
-    const box    = new THREE.Box3().setFromObject(model);
-    const center = box.getCenter(new THREE.Vector3());
-    const size   = box.getSize(new THREE.Vector3());
-    // Use the taller of height/width so the whole body fits the circle
-    const maxDim = Math.max(size.x, size.y, size.z);
+    // ── Auto-fit: scale first, then re-measure to centre accurately ──
+    const box0   = new THREE.Box3().setFromObject(model);
+    const size0  = box0.getSize(new THREE.Vector3());
+    const maxDim = Math.max(size0.x, size0.y, size0.z);
 
-    // Fill ~85% of canvas height → ~264px robot on 310px canvas
     const scale = 2.4 / maxDim;
     model.scale.setScalar(scale);
 
-    // Centre on origin
-    model.position.copy(center.multiplyScalar(-scale));
+    // Re-measure bounding box AFTER scaling so centre is accurate in world space
+    scene.add(model);                                    // must be in scene for world bbox
+    const box1   = new THREE.Box3().setFromObject(model);
+    const centre = box1.getCenter(new THREE.Vector3());
+    model.position.sub(centre);                          // shift model so bbox centre = origin
 
     // ── Material tweaks — tinted to match theme ──
     model.traverse((child) => {
@@ -111,8 +111,6 @@ loader.load(
         mat.needsUpdate = true;
       }
     });
-
-    scene.add(model);
 
     // Play first animation clip if the model has any
     if (gltf.animations.length) {
