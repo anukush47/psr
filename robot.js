@@ -35,8 +35,8 @@ renderer.setClearColor(0x000000, 0);  // fully transparent
 
 // ── Scene & Camera ────────────────────────────────────────
 const scene  = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(38, 1, 0.01, 100);
-camera.position.set(0, 0.5, 4.5);
+const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100);
+camera.position.set(0, 0.3, 3.0);
 camera.lookAt(0, 0, 0);
 
 // ── Lighting ──────────────────────────────────────────────
@@ -91,11 +91,11 @@ loader.load(
     // Use the taller of height/width so the whole body fits the circle
     const maxDim = Math.max(size.x, size.y, size.z);
 
-    // 1.55 keeps the full model inside the inscribed circle (canvas is clipped to 50%)
-    const scale = 1.55 / maxDim;
+    // Fill ~85% of the visible frustum height so the robot looks large in the circle
+    const scale = 2.6 / maxDim;
     model.scale.setScalar(scale);
 
-    // Centre perfectly on origin — no vertical nudge that clips feet/head
+    // Centre on origin
     model.position.copy(center.multiplyScalar(-scale));
 
     // ── Material tweaks — tinted to match theme ──
