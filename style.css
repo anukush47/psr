@@ -9,47 +9,47 @@
 
 /* ── DARK THEME (default) ─────────────────────────────── */
 :root {
-  --bg:      #0a0a0f;
-  --bg2:     #0f0f18;
-  --bg3:     #13131f;
+  --bg: #0a0a0f;
+  --bg2: #0f0f18;
+  --bg3: #13131f;
   --surface: #1a1a2e;
-  --surface2:#1e1e32;
-  --accent:  #7c3aed;
+  --surface2: #1e1e32;
+  --accent: #7c3aed;
   --accent2: #a855f7;
   --accent3: #c084fc;
-  --pink:    #ec4899;
-  --cyan:    #06b6d4;
-  --green:   #22c55e;
-  --text:    #e2e8f0;
-  --text2:   #94a3b8;
-  --text3:   #64748b;
-  --border:  rgba(124, 58, 237, 0.2);
-  --glow:    0 0 40px rgba(124, 58, 237, 0.3);
-  --radius:  16px;
+  --pink: #ec4899;
+  --cyan: #06b6d4;
+  --green: #22c55e;
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --border: rgba(124, 58, 237, 0.2);
+  --glow: 0 0 40px rgba(124, 58, 237, 0.3);
+  --radius: 16px;
   --radius-sm: 8px;
 
   /* ── Glass system ── */
-  --gl-bg:       rgba(10, 8, 22, 0.52);
-  --gl-border:   rgba(255, 255, 255, 0.08);
-  --gl-shine:    rgba(255, 255, 255, 0.13);
-  --gl-depth:    rgba(0, 0, 0, 0.28);
-  --gl-drop:     rgba(0, 0, 0, 0.45);
-  --gl-glow:     rgba(124, 58, 237, 0.14);
-  --gl-blur:     blur(20px) saturate(180%);
-  --gl-grad:     linear-gradient(135deg,
-                   rgba(255,255,255,0.07) 0%,
-                   rgba(255,255,255,0.01) 65%,
-                   rgba(124,58,237,0.05) 100%);
+  --gl-bg: rgba(10, 8, 22, 0.52);
+  --gl-border: rgba(255, 255, 255, 0.08);
+  --gl-shine: rgba(255, 255, 255, 0.13);
+  --gl-depth: rgba(0, 0, 0, 0.28);
+  --gl-drop: rgba(0, 0, 0, 0.45);
+  --gl-glow: rgba(124, 58, 237, 0.14);
+  --gl-blur: blur(20px) saturate(180%);
+  --gl-grad: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.07) 0%,
+      rgba(255, 255, 255, 0.01) 65%,
+      rgba(124, 58, 237, 0.05) 100%);
   /* nav glass */
-  --nav-bg:      rgba(8, 8, 14, 0.48);
-  --nav-glow:    rgba(124, 58, 237, 0.14);
+  --nav-bg: rgba(8, 8, 14, 0.48);
+  --nav-glow: rgba(124, 58, 237, 0.14);
   /* section backgrounds for glass sections */
-  --sec-bg:      var(--bg);
-  --sec-bg2:     var(--bg2);
+  --sec-bg: var(--bg);
+  --sec-bg2: var(--bg2);
   /* loader */
-  --loader-bg:   var(--bg);
+  --loader-bg: var(--bg);
   /* scrollbar */
-  --sb-track:    var(--bg);
+  --sb-track: var(--bg);
 }
 
 /* Dark only — no theme switching */
@@ -84,11 +84,13 @@ ul {
   height: 8px;
   border-radius: 50%;
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   pointer-events: none;
   z-index: 10001;
   will-change: transform;
-  opacity: 0;           /* hidden until first mousemove */
+  opacity: 0;
+  /* hidden until first mousemove */
 
   /* default: purple glow */
   background: #a855f7;
@@ -98,8 +100,8 @@ ul {
     0 0 24px rgba(168, 85, 247, 0.5);
 
   transition:
-    width 0.2s cubic-bezier(0.34,1.56,0.64,1),
-    height 0.2s cubic-bezier(0.34,1.56,0.64,1),
+    width 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+    height 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
     background 0.2s ease,
     box-shadow 0.2s ease;
 }
@@ -110,11 +112,13 @@ ul {
   height: 40px;
   border-radius: 50%;
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   pointer-events: none;
   z-index: 10000;
   will-change: transform;
-  opacity: 0;           /* hidden until first mousemove */
+  opacity: 0;
+  /* hidden until first mousemove */
 
   /* default: glass ring */
   border: 1.5px solid rgba(168, 85, 247, 0.4);
@@ -122,8 +126,8 @@ ul {
   backdrop-filter: blur(2px);
 
   transition:
-    width 0.28s cubic-bezier(0.34,1.56,0.64,1),
-    height 0.28s cubic-bezier(0.34,1.56,0.64,1),
+    width 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+    height 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
     border-color 0.2s ease,
     background 0.2s ease,
     border-radius 0.2s ease;
@@ -131,63 +135,88 @@ ul {
 
 /* ── Link state (hover over a / button) — pink, expanded ── */
 .cursor[data-state="link"] {
-  width: 10px; height: 10px;
+  width: 10px;
+  height: 10px;
   background: #ec4899;
   box-shadow:
     0 0 0 1.5px rgba(236, 72, 153, 0.25),
     0 0 12px rgba(236, 72, 153, 1),
     0 0 28px rgba(236, 72, 153, 0.55);
 }
+
 .cursor-follower[data-state="link"] {
-  width: 52px; height: 52px;
+  width: 52px;
+  height: 52px;
   border-color: rgba(236, 72, 153, 0.55);
   background: rgba(236, 72, 153, 0.07);
 }
 
 /* ── Card state (hover over cards) — cyan, wide ring ── */
 .cursor[data-state="card"] {
-  width: 7px; height: 7px;
+  width: 7px;
+  height: 7px;
   background: #06b6d4;
   box-shadow:
     0 0 0 1.5px rgba(6, 182, 212, 0.25),
     0 0 10px rgba(6, 182, 212, 1),
     0 0 24px rgba(6, 182, 212, 0.5);
 }
+
 .cursor-follower[data-state="card"] {
-  width: 68px; height: 68px;
+  width: 68px;
+  height: 68px;
   border-color: rgba(6, 182, 212, 0.3);
   background: rgba(6, 182, 212, 0.04);
 }
 
 /* ── Text state (hover over inputs) — slim I-beam ring ── */
 .cursor[data-state="text"] {
-  width: 2px; height: 18px;
+  width: 2px;
+  height: 18px;
   border-radius: 1px;
   background: #a855f7;
   box-shadow: 0 0 8px rgba(168, 85, 247, 0.8);
 }
+
 .cursor-follower[data-state="text"] {
-  width: 36px; height: 36px;
+  width: 36px;
+  height: 36px;
   border-color: rgba(168, 85, 247, 0.2);
   background: transparent;
 }
 
 /* ── Click pulse ── */
 .cursor.clicking {
-  transform: scale(0.7) !important; /* JS sets transform so this tweaks via filter */
+  transform: scale(0.7) !important;
+  /* JS sets transform so this tweaks via filter */
   filter: brightness(1.6);
 }
+
 .cursor-follower.clicking {
-  animation: followerPulse 0.35s cubic-bezier(0.22,1,0.36,1) forwards;
+  animation: followerPulse 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+
 @keyframes followerPulse {
-  0%   { transform: translate3d(var(--fx,0),var(--fy,0),0) scale(1);   opacity: 0.9; }
-  60%  { transform: translate3d(var(--fx,0),var(--fy,0),0) scale(1.5); opacity: 0.4; }
-  100% { transform: translate3d(var(--fx,0),var(--fy,0),0) scale(1);   opacity: 1;   }
+  0% {
+    transform: translate3d(var(--fx, 0), var(--fy, 0), 0) scale(1);
+    opacity: 0.9;
+  }
+
+  60% {
+    transform: translate3d(var(--fx, 0), var(--fy, 0), 0) scale(1.5);
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: translate3d(var(--fx, 0), var(--fy, 0), 0) scale(1);
+    opacity: 1;
+  }
 }
 
 body:hover .cursor,
-body:hover .cursor-follower { opacity: 1; }
+body:hover .cursor-follower {
+  opacity: 1;
+}
 
 body:hover .cursor {
   transform: scale(1);
@@ -342,12 +371,10 @@ button:hover~.cursor {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0.07) 0%,
-    rgba(255, 255, 255, 0.01) 55%,
-    rgba(124, 58, 237, 0.06) 100%
-  );
+  background: linear-gradient(120deg,
+      rgba(255, 255, 255, 0.07) 0%,
+      rgba(255, 255, 255, 0.01) 55%,
+      rgba(124, 58, 237, 0.06) 100%);
   pointer-events: none;
   z-index: 0;
 }
@@ -360,14 +387,12 @@ button:hover~.cursor {
   left: 8%;
   right: 8%;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.4) 25%,
-    rgba(255, 255, 255, 0.55) 50%,
-    rgba(255, 255, 255, 0.4) 75%,
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4) 25%,
+      rgba(255, 255, 255, 0.55) 50%,
+      rgba(255, 255, 255, 0.4) 75%,
+      transparent);
   pointer-events: none;
   z-index: 1;
 }
@@ -453,14 +478,14 @@ button:hover~.cursor {
   font-weight: 600;
   color: #fff;
   background: linear-gradient(135deg, var(--accent), var(--accent2));
-  box-shadow: 0 2px 12px rgba(124, 58, 237, 0.45), inset 0 1px 0 rgba(255,255,255,0.15);
+  box-shadow: 0 2px 12px rgba(124, 58, 237, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.15);
   transition: box-shadow 0.2s ease, transform 0.2s ease;
   flex-shrink: 0;
   white-space: nowrap;
 }
 
 .nav-cta:hover {
-  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.65), inset 0 1px 0 rgba(255,255,255,0.2);
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   transform: translateY(-1px);
 }
 
@@ -628,8 +653,15 @@ button:hover~.cursor {
 }
 
 @keyframes blink {
-  0%, 100% { border-color: var(--accent3); }
-  50%       { border-color: transparent; }
+
+  0%,
+  100% {
+    border-color: var(--accent3);
+  }
+
+  50% {
+    border-color: transparent;
+  }
 }
 
 .hero-desc {
@@ -712,16 +744,25 @@ button:hover~.cursor {
   inset: 0;
   border-radius: 50%;
   background: radial-gradient(ellipse at center,
-    rgba(124, 58, 237, 0.18) 0%,
-    rgba(236, 72, 153, 0.08) 45%,
-    transparent 70%);
+      rgba(124, 58, 237, 0.18) 0%,
+      rgba(236, 72, 153, 0.08) 45%,
+      transparent 70%);
   animation: ambientPulse 4s ease-in-out infinite;
   will-change: transform, opacity;
 }
 
 @keyframes ambientPulse {
-  0%, 100% { transform: scale(1);    opacity: 0.7; }
-  50%       { transform: scale(1.12); opacity: 1;   }
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
 }
 
 /* Ring wrappers: set the 3-D tilt plane, centered over the system */
@@ -733,9 +774,17 @@ button:hover~.cursor {
   justify-content: center;
 }
 
-.rw-1 { transform: rotateX(72deg) rotateY(0deg); }
-.rw-2 { transform: rotateX(72deg) rotateY(62deg); }
-.rw-3 { transform: rotateX(72deg) rotateY(124deg); }
+.rw-1 {
+  transform: rotateX(72deg) rotateY(0deg);
+}
+
+.rw-2 {
+  transform: rotateX(72deg) rotateY(62deg);
+}
+
+.rw-3 {
+  transform: rotateX(72deg) rotateY(124deg);
+}
 
 /* Rings spin in their own tilted plane */
 .orb-ring {
@@ -772,8 +821,13 @@ button:hover~.cursor {
 }
 
 @keyframes spinZ {
-  from { transform: rotateZ(0deg); }
-  to   { transform: rotateZ(360deg); }
+  from {
+    transform: rotateZ(0deg);
+  }
+
+  to {
+    transform: rotateZ(360deg);
+  }
 }
 
 /* Glowing beads riding on each ring */
@@ -828,8 +882,15 @@ button:hover~.cursor {
 }
 
 @keyframes avPulse {
-  0%   { transform: scale(1);   opacity: 0.9; }
-  100% { transform: scale(1.6); opacity: 0;   }
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
 }
 
 .av-face {
@@ -838,7 +899,8 @@ button:hover~.cursor {
   border-radius: 50%;
   background: transparent;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  /* robot stands OVER the circle, not clipped inside */
   /* layered glow border */
   box-shadow:
     0 0 0 2px var(--accent),
@@ -849,12 +911,18 @@ button:hover~.cursor {
   will-change: transform;
 }
 
-/* Canvas fills the circle */
+/* Canvas is large and floats above the circle — not clipped */
 #robotCanvas {
-  width: 100% !important;
-  height: 100% !important;
+  position: absolute;
+  width: 260px !important;
+  height: 360px !important;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -10px;
+  /* feet sit at circle bottom, body rises above */
   display: block;
-  border-radius: 50%;
+  pointer-events: none;
+  z-index: 5;
 }
 
 /* Loading shimmer while model downloads */
@@ -864,21 +932,38 @@ button:hover~.cursor {
   inset: 0;
   border-radius: 50%;
   background: radial-gradient(circle at 40% 35%,
-    rgba(168, 85, 247, 0.18),
-    rgba(10, 8, 22, 0.9) 70%);
+      rgba(168, 85, 247, 0.18),
+      rgba(10, 8, 22, 0.9) 70%);
   z-index: 0;
   animation: shimmerPulse 2s ease-in-out infinite;
 }
-.av-face.model-loaded::before { display: none; }
+
+.av-face.model-loaded::before {
+  display: none;
+}
 
 @keyframes shimmerPulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 @keyframes avFloat {
-  0%, 100% { transform: translateY(0px);   }
-  50%       { transform: translateY(-14px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
 }
 
 /* ==================== ORBITING SKILL CHIPS ==================== */
@@ -902,8 +987,13 @@ button:hover~.cursor {
 }
 
 @keyframes chipOrbit {
-  from { transform: rotate(0deg)   translateX(210px); }
-  to   { transform: rotate(360deg) translateX(210px); }
+  from {
+    transform: rotate(0deg) translateX(210px);
+  }
+
+  to {
+    transform: rotate(360deg) translateX(210px);
+  }
 }
 
 /* Counter-rotation keeps the label upright */
@@ -913,20 +1003,87 @@ button:hover~.cursor {
 }
 
 @keyframes chipFaceUp {
-  from { transform: rotate(0deg);    }
-  to   { transform: rotate(-360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
 }
 
 /* Stagger 9 chips evenly around the 360° orbit */
-.co-1 { animation-delay:    0s; } .co-1 .tech-chip { animation-delay:    0s; }
-.co-2 { animation-delay: -3.56s; } .co-2 .tech-chip { animation-delay: -3.56s; }
-.co-3 { animation-delay: -7.11s; } .co-3 .tech-chip { animation-delay: -7.11s; }
-.co-4 { animation-delay:-10.67s; } .co-4 .tech-chip { animation-delay:-10.67s; }
-.co-5 { animation-delay:-14.22s; } .co-5 .tech-chip { animation-delay:-14.22s; }
-.co-6 { animation-delay:-17.78s; } .co-6 .tech-chip { animation-delay:-17.78s; }
-.co-7 { animation-delay:-21.33s; } .co-7 .tech-chip { animation-delay:-21.33s; }
-.co-8 { animation-delay:-24.89s; } .co-8 .tech-chip { animation-delay:-24.89s; }
-.co-9 { animation-delay:-28.44s; } .co-9 .tech-chip { animation-delay:-28.44s; }
+.co-1 {
+  animation-delay: 0s;
+}
+
+.co-1 .tech-chip {
+  animation-delay: 0s;
+}
+
+.co-2 {
+  animation-delay: -3.56s;
+}
+
+.co-2 .tech-chip {
+  animation-delay: -3.56s;
+}
+
+.co-3 {
+  animation-delay: -7.11s;
+}
+
+.co-3 .tech-chip {
+  animation-delay: -7.11s;
+}
+
+.co-4 {
+  animation-delay: -10.67s;
+}
+
+.co-4 .tech-chip {
+  animation-delay: -10.67s;
+}
+
+.co-5 {
+  animation-delay: -14.22s;
+}
+
+.co-5 .tech-chip {
+  animation-delay: -14.22s;
+}
+
+.co-6 {
+  animation-delay: -17.78s;
+}
+
+.co-6 .tech-chip {
+  animation-delay: -17.78s;
+}
+
+.co-7 {
+  animation-delay: -21.33s;
+}
+
+.co-7 .tech-chip {
+  animation-delay: -21.33s;
+}
+
+.co-8 {
+  animation-delay: -24.89s;
+}
+
+.co-8 .tech-chip {
+  animation-delay: -24.89s;
+}
+
+.co-9 {
+  animation-delay: -28.44s;
+}
+
+.co-9 .tech-chip {
+  animation-delay: -28.44s;
+}
 
 .tech-chip {
   display: inline-flex;
@@ -947,7 +1104,7 @@ button:hover~.cursor {
 
 .tech-chip:hover {
   border-color: var(--accent2);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.5), 0 0 16px rgba(124,58,237,0.4);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5), 0 0 16px rgba(124, 58, 237, 0.4);
   color: var(--text);
 }
 
@@ -1484,19 +1641,28 @@ button:hover~.cursor {
 .reveal-right {
   opacity: 0;
   transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
   transition-delay: var(--d, 0s);
   will-change: opacity, transform;
 }
 
-.reveal-up    { transform: translateY(32px); }
-.reveal-left  { transform: translateX(-32px); }
-.reveal-right { transform: translateX(32px); }
+.reveal-up {
+  transform: translateY(32px);
+}
+
+.reveal-left {
+  transform: translateX(-32px);
+}
+
+.reveal-right {
+  transform: translateX(32px);
+}
 
 .revealed {
   opacity: 1 !important;
   transform: translate(0, 0) !important;
-  will-change: auto; /* release after done */
+  will-change: auto;
+  /* release after done */
 }
 
 /* ==================== RESPONSIVE ==================== */
@@ -1595,25 +1761,71 @@ button:hover~.cursor {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 /* Full name loader — extra letter delays */
-.loader-text span:nth-child(9)  { animation-delay: 0.64s; }
-.loader-text span:nth-child(10) { animation-delay: 0.72s; }
-.loader-text span:nth-child(11) { animation-delay: 0.80s; }
-.loader-text span:nth-child(12) { animation-delay: 0.88s; }
-.loader-text span:nth-child(13) { animation-delay: 0.96s; }
-.loader-text span:nth-child(14) { animation-delay: 1.04s; }
-.loader-text span:nth-child(15) { animation-delay: 1.12s; }
-.loader-text span:nth-child(16) { animation-delay: 1.20s; }
-.loader-text span:nth-child(17) { animation-delay: 1.28s; }
-.loader-text span:nth-child(18) { animation-delay: 1.36s; }
-.loader-text span:nth-child(19) { animation-delay: 1.44s; }
-.loader-text span:nth-child(20) { animation-delay: 1.52s; }
-.loader-text span:nth-child(21) { animation-delay: 1.60s; }
-.loader-text span:nth-child(22) { animation-delay: 1.68s; }
+.loader-text span:nth-child(9) {
+  animation-delay: 0.64s;
+}
+
+.loader-text span:nth-child(10) {
+  animation-delay: 0.72s;
+}
+
+.loader-text span:nth-child(11) {
+  animation-delay: 0.80s;
+}
+
+.loader-text span:nth-child(12) {
+  animation-delay: 0.88s;
+}
+
+.loader-text span:nth-child(13) {
+  animation-delay: 0.96s;
+}
+
+.loader-text span:nth-child(14) {
+  animation-delay: 1.04s;
+}
+
+.loader-text span:nth-child(15) {
+  animation-delay: 1.12s;
+}
+
+.loader-text span:nth-child(16) {
+  animation-delay: 1.20s;
+}
+
+.loader-text span:nth-child(17) {
+  animation-delay: 1.28s;
+}
+
+.loader-text span:nth-child(18) {
+  animation-delay: 1.36s;
+}
+
+.loader-text span:nth-child(19) {
+  animation-delay: 1.44s;
+}
+
+.loader-text span:nth-child(20) {
+  animation-delay: 1.52s;
+}
+
+.loader-text span:nth-child(21) {
+  animation-delay: 1.60s;
+}
+
+.loader-text span:nth-child(22) {
+  animation-delay: 1.68s;
+}
 
 /* ==================== EDUCATION ==================== */
 .education {
@@ -1960,12 +2172,24 @@ button:hover~.cursor {
 }
 
 /* ==================== SCROLLBAR ==================== */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--sb-track); }
-::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--sb-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 3px;
+}
 
 /* ==================== SELECTION ==================== */
-::selection { background: rgba(124, 58, 237, 0.3); color: var(--text); }
+::selection {
+  background: rgba(124, 58, 237, 0.3);
+  color: var(--text);
+}
 
 /* ================================================================
    LIQUID GLASS — UNIVERSAL SYSTEM
@@ -1987,6 +2211,7 @@ button:hover~.cursor {
   position: relative;
   overflow: hidden;
 }
+
 .gl::after {
   content: '';
   position: absolute;
@@ -1998,17 +2223,42 @@ button:hover~.cursor {
 }
 
 /* ── Loader ── */
-.loader { background: var(--loader-bg); }
+.loader {
+  background: var(--loader-bg);
+}
 
 /* ── Section backgrounds ── */
-.about   { background: var(--sec-bg2); }
-.skills  { background: var(--sec-bg); }
-.projects{ background: var(--sec-bg2); }
-.research{ background: var(--sec-bg2); }
-.education{ background: var(--sec-bg); }
-.experience{ background: var(--sec-bg); }
-.contact { background: var(--sec-bg); }
-.footer  { background: var(--sec-bg2); }
+.about {
+  background: var(--sec-bg2);
+}
+
+.skills {
+  background: var(--sec-bg);
+}
+
+.projects {
+  background: var(--sec-bg2);
+}
+
+.research {
+  background: var(--sec-bg2);
+}
+
+.education {
+  background: var(--sec-bg);
+}
+
+.experience {
+  background: var(--sec-bg);
+}
+
+.contact {
+  background: var(--sec-bg);
+}
+
+.footer {
+  background: var(--sec-bg2);
+}
 
 
 /* ── BUTTONS ─────────────────────────────────────────────── */
@@ -2022,9 +2272,11 @@ button:hover~.cursor {
 .btn::after {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 50%;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.14), transparent);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.14), transparent);
   border-radius: inherit;
   pointer-events: none;
   z-index: 1;
@@ -2036,15 +2288,16 @@ button:hover~.cursor {
   background-position: 0% 0%;
   color: #fff;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
     0 4px 20px rgba(124, 58, 237, 0.45),
     0 0 0 1px rgba(124, 58, 237, 0.25);
   transition: transform 0.2s ease, box-shadow 0.2s ease, background-position 0.4s ease;
 }
+
 .btn-primary:hover {
   background-position: 100% 0%;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
     0 8px 32px rgba(124, 58, 237, 0.65),
     0 0 0 1px rgba(168, 85, 247, 0.4);
   transform: translateY(-2px);
@@ -2061,6 +2314,7 @@ button:hover~.cursor {
     inset 0 -1px 0 var(--gl-depth),
     0 4px 16px var(--gl-drop);
 }
+
 .btn-outline:hover {
   border-color: rgba(168, 85, 247, 0.45);
   box-shadow:
@@ -2074,15 +2328,18 @@ button:hover~.cursor {
 /* Nav CTA glass shine */
 .nav-cta {
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
     0 2px 12px rgba(124, 58, 237, 0.45);
 }
+
 .nav-cta::after {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 50%;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.16), transparent);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.16), transparent);
   border-radius: inherit;
   pointer-events: none;
 }
@@ -2097,9 +2354,10 @@ button:hover~.cursor {
     inset 0 1px 0 var(--gl-shine),
     inset 0 -1px 0 var(--gl-depth),
     0 4px 20px var(--gl-drop),
-    0 0 0 0.5px rgba(255,255,255,0.03);
+    0 0 0 0.5px rgba(255, 255, 255, 0.03);
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
+
 /* skill-card::before is the top accent bar — keep it, add overlay via ::after only when not hovering */
 .skill-card:hover {
   transform: translateY(-5px);
@@ -2122,6 +2380,7 @@ button:hover~.cursor {
     inset 0 -1px 0 var(--gl-depth),
     0 4px 24px var(--gl-drop);
 }
+
 .project-card:hover {
   border-color: rgba(168, 85, 247, 0.5);
   box-shadow:
@@ -2142,6 +2401,7 @@ button:hover~.cursor {
     inset 0 -1px 0 var(--gl-depth),
     0 4px 24px var(--gl-drop);
 }
+
 .research-card.featured {
   border-color: rgba(168, 85, 247, 0.3);
   box-shadow:
@@ -2150,6 +2410,7 @@ button:hover~.cursor {
     0 6px 32px var(--gl-drop),
     0 0 40px var(--gl-glow);
 }
+
 .research-card:hover {
   border-color: rgba(168, 85, 247, 0.5);
   box-shadow:
@@ -2170,6 +2431,7 @@ button:hover~.cursor {
     inset 0 -1px 0 var(--gl-depth),
     0 4px 20px var(--gl-drop);
 }
+
 .edu-card:hover {
   border-color: rgba(168, 85, 247, 0.5);
   box-shadow:
@@ -2178,6 +2440,7 @@ button:hover~.cursor {
     0 12px 36px var(--gl-drop),
     0 0 32px var(--gl-glow);
 }
+
 /* edu-card::before is the top accent line — keep */
 
 /* ── EXPERIENCE CARDS ───────────────────────────────────── */
@@ -2191,6 +2454,7 @@ button:hover~.cursor {
     inset 0 -1px 0 var(--gl-depth),
     0 4px 20px var(--gl-drop);
 }
+
 .exp-body:hover {
   border-color: rgba(168, 85, 247, 0.5);
   box-shadow:
@@ -2224,6 +2488,7 @@ button:hover~.cursor {
     inset 0 -1px 0 var(--gl-depth),
     0 4px 16px var(--gl-drop);
 }
+
 .contact-item:hover {
   border-color: rgba(168, 85, 247, 0.5);
   box-shadow:
@@ -2248,21 +2513,24 @@ button:hover~.cursor {
 
 .form-group input,
 .form-group textarea {
-  background: rgba(0,0,0,0.15);
+  background: rgba(0, 0, 0, 0.15);
   border: 1px solid var(--gl-border);
   color: var(--text);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
+
 [data-theme="light"] .form-group input,
 [data-theme="light"] .form-group textarea,
 @media (prefers-color-scheme: light) {
+
   :root:not([data-theme="dark"]) .form-group input,
   :root:not([data-theme="dark"]) .form-group textarea {
-    background: rgba(255,255,255,0.4);
+    background: rgba(255, 255, 255, 0.4);
   }
 }
+
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: var(--accent2);
@@ -2285,7 +2553,11 @@ button:hover~.cursor {
   box-shadow: inset 0 1px 0 var(--gl-shine);
   transition: background 0.2s, border-color 0.2s;
 }
-.tag:hover { background: rgba(124, 58, 237, 0.2); border-color: rgba(168,85,247,0.4); }
+
+.tag:hover {
+  background: rgba(124, 58, 237, 0.2);
+  border-color: rgba(168, 85, 247, 0.4);
+}
 
 /* ── HERO TAG ───────────────────────────────────────────── */
 .hero-tag {
@@ -2293,7 +2565,7 @@ button:hover~.cursor {
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(34, 197, 94, 0.3);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 12px rgba(34,197,94,0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 2px 12px rgba(34, 197, 94, 0.1);
   color: var(--green);
 }
 
@@ -2306,16 +2578,34 @@ button:hover~.cursor {
 
 /* ── RESPONSIVE: ensure glass still renders on mobile ───── */
 @media (max-width: 900px) {
-  .skill-card, .project-card, .research-card,
-  .edu-card, .exp-body, .contact-item, .contact-form, .about-img-card {
+
+  .skill-card,
+  .project-card,
+  .research-card,
+  .edu-card,
+  .exp-body,
+  .contact-item,
+  .contact-form,
+  .about-img-card {
     backdrop-filter: blur(12px) saturate(160%);
     -webkit-backdrop-filter: blur(12px) saturate(160%);
   }
-  .nav-toggle-wrap { gap: 0.5rem; }
+
+  .nav-toggle-wrap {
+    gap: 0.5rem;
+  }
 }
+
 @media (max-width: 500px) {
-  .skill-card, .project-card, .research-card,
-  .edu-card, .exp-body, .contact-item, .contact-form, .about-img-card {
+
+  .skill-card,
+  .project-card,
+  .research-card,
+  .edu-card,
+  .exp-body,
+  .contact-item,
+  .contact-form,
+  .about-img-card {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
   }
@@ -2331,9 +2621,14 @@ button:hover~.cursor {
 
 /* Default off-element position so glow is invisible until hover */
 .btn,
-.skill-card, .project-card, .research-card,
-.edu-card, .exp-body, .contact-item,
-.contact-form, .about-img-card {
+.skill-card,
+.project-card,
+.research-card,
+.edu-card,
+.exp-body,
+.contact-item,
+.contact-form,
+.about-img-card {
   --mx: -300px;
   --my: -300px;
 }
@@ -2344,25 +2639,25 @@ button:hover~.cursor {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(
-    90px circle at var(--mx) var(--my),
-    rgba(255, 255, 255, 0.28),
-    transparent 75%
-  );
+  background: radial-gradient(90px circle at var(--mx) var(--my),
+      rgba(255, 255, 255, 0.28),
+      transparent 75%);
   pointer-events: none;
-  z-index: 2;  /* sits above the gloss ::after */
+  z-index: 2;
+  /* sits above the gloss ::after */
   opacity: 0;
   transition: opacity 0.25s ease;
 }
-.btn:hover::before { opacity: 1; }
+
+.btn:hover::before {
+  opacity: 1;
+}
 
 /* Primary button: warmer lens */
 .btn-primary::before {
-  background: radial-gradient(
-    90px circle at var(--mx) var(--my),
-    rgba(255, 255, 255, 0.35),
-    transparent 75%
-  );
+  background: radial-gradient(90px circle at var(--mx) var(--my),
+      rgba(255, 255, 255, 0.35),
+      transparent 75%);
 }
 
 /* ── Card & tile spotlight (brand-purple lens) ── */
@@ -2378,22 +2673,23 @@ button:hover~.cursor {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(
-    260px circle at var(--mx) var(--my),
-    rgba(168, 85, 247, 0.13),
-    transparent 70%
-  );
+  background: radial-gradient(260px circle at var(--mx) var(--my),
+      rgba(168, 85, 247, 0.13),
+      transparent 70%);
   pointer-events: none;
   z-index: 1;
   transition: opacity 0.2s ease;
   opacity: 0;
 }
+
 .project-card:hover::before,
 .research-card:hover::before,
 .exp-body:hover::before,
 .contact-item:hover::before,
 .contact-form:hover::before,
-.about-img-card:hover::before { opacity: 1; }
+.about-img-card:hover::before {
+  opacity: 1;
+}
 
 /* skill-card::before = top accent line → use ::after for spotlight */
 /* edu-card::before   = top accent line → use ::after for spotlight */
@@ -2403,16 +2699,16 @@ button:hover~.cursor {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(
-    220px circle at var(--mx) var(--my),
-    rgba(168, 85, 247, 0.13),
-    transparent 70%
-  );
+  background: radial-gradient(220px circle at var(--mx) var(--my),
+      rgba(168, 85, 247, 0.13),
+      transparent 70%);
   pointer-events: none;
   z-index: 1;
   opacity: 0;
   transition: opacity 0.2s ease;
 }
-.skill-card:hover::after,
-.edu-card:hover::after { opacity: 1; }
 
+.skill-card:hover::after,
+.edu-card:hover::after {
+  opacity: 1;
+}

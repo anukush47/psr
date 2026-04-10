@@ -15,8 +15,8 @@ const hero    = document.getElementById('hero');
 
 if (!canvas || !hero) throw new Error('Robot: required DOM elements missing.');
 
-// ── Dimensions (matches CSS .av-face = 180×180) ──────────
-const SIZE = 180;
+// ── Dimensions — tall portrait canvas so robot stands over the circle ──
+const W = 260, H = 360;
 
 // ── Renderer ──────────────────────────────────────────────
 const renderer = new THREE.WebGLRenderer({
@@ -25,19 +25,20 @@ const renderer = new THREE.WebGLRenderer({
   antialias:        true,
   powerPreference: 'high-performance',
 });
-renderer.setSize(SIZE, SIZE);
+renderer.setSize(W, H);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping      = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.3;
-renderer.shadowMap.enabled   = false; // off — saves GPU on 180px canvas
-renderer.setClearColor(0x000000, 0);  // fully transparent
+renderer.shadowMap.enabled   = false;
+renderer.setClearColor(0x000000, 0); // fully transparent
 
 // ── Scene & Camera ────────────────────────────────────────
 const scene  = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100);
-camera.position.set(0, 0.3, 3.0);
-camera.lookAt(0, 0, 0);
+// Portrait aspect (W/H) so the full humanoid robot fills the tall frame
+const camera = new THREE.PerspectiveCamera(48, W / H, 0.01, 100);
+camera.position.set(0, 0.2, 3.2);
+camera.lookAt(0, 0.1, 0);
 
 // ── Lighting ──────────────────────────────────────────────
 // Soft ambient so no face is pitch black
@@ -91,8 +92,8 @@ loader.load(
     // Use the taller of height/width so the whole body fits the circle
     const maxDim = Math.max(size.x, size.y, size.z);
 
-    // Fill ~85% of the visible frustum height so the robot looks large in the circle
-    const scale = 2.6 / maxDim;
+    // Fill ~90% of the tall canvas so the robot towers over the circle
+    const scale = 2.8 / maxDim;
     model.scale.setScalar(scale);
 
     // Centre on origin
