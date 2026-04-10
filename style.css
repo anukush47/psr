@@ -52,66 +52,7 @@
   --sb-track:    var(--bg);
 }
 
-/* ── LIGHT THEME values (shared between media-query and data-theme) ── */
-/* More saturated lavender backdrop so white-glass cards POP against it  */
-/* Hero section is always kept dark (forced below)                        */
-:root.--lt, [data-theme="light"],
-@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) {
-  --bg:       #ddd6fe;   /* vivid soft lavender */
-  --bg2:      #c4b5fd;   /* one step deeper */
-  --bg3:      #ede9fe;   /* very light for inner surfaces */
-  --surface:  rgba(255, 255, 255, 0.82);
-  --surface2: rgba(255, 255, 255, 0.60);
-  --accent:   #6d28d9;
-  --accent2:  #7c3aed;
-  --accent3:  #6d28d9;
-  --pink:     #db2777;
-  --cyan:     #0369a1;
-  --green:    #15803d;
-  --text:     #1e1b4b;   /* deep indigo-black */
-  --text2:    #3730a3;   /* medium indigo */
-  --text3:    #6d6b9e;   /* muted purple */
-  --border:   rgba(109, 40, 217, 0.22);
-  --glow:     0 0 40px rgba(109, 40, 217, 0.15);
-
-  /* Glass — crisp white panels against the saturated bg */
-  --gl-bg:     rgba(255, 255, 255, 0.62);
-  --gl-border: rgba(255, 255, 255, 0.85);
-  --gl-shine:  rgba(255, 255, 255, 1);
-  --gl-depth:  rgba(109, 40, 217, 0.06);
-  --gl-drop:   rgba(80, 30, 160, 0.14);
-  --gl-glow:   rgba(109, 40, 217, 0.1);
-  --gl-blur:   blur(22px) saturate(220%);
-  --gl-grad:   linear-gradient(135deg,
-                 rgba(255,255,255,0.7)  0%,
-                 rgba(255,255,255,0.25) 55%,
-                 rgba(124,58,237,0.04)  100%);
-
-  --nav-bg:    rgba(255, 255, 255, 0.60);
-  --nav-glow:  rgba(109, 40, 217, 0.1);
-  --sec-bg:    var(--bg);
-  --sec-bg2:   var(--bg2);
-  --loader-bg: #1e1b4b;   /* loader always dark for drama */
-  --sb-track:  var(--bg2);
-} }
-
-/* Manual override — always dark */
-[data-theme="dark"] {
-  --bg: #0a0a0f; --bg2: #0f0f18; --bg3: #13131f;
-  --surface: #1a1a2e; --surface2: #1e1e32;
-  --accent: #7c3aed; --accent2: #a855f7; --accent3: #c084fc;
-  --pink: #ec4899; --cyan: #06b6d4; --green: #22c55e;
-  --text: #e2e8f0; --text2: #94a3b8; --text3: #64748b;
-  --border: rgba(124,58,237,0.2); --glow: 0 0 40px rgba(124,58,237,0.3);
-  --gl-bg: rgba(10,8,22,0.52); --gl-border: rgba(255,255,255,0.08);
-  --gl-shine: rgba(255,255,255,0.13); --gl-depth: rgba(0,0,0,0.28);
-  --gl-drop: rgba(0,0,0,0.45); --gl-glow: rgba(124,58,237,0.14);
-  --gl-blur: blur(20px) saturate(180%);
-  --gl-grad: linear-gradient(135deg,rgba(255,255,255,0.07) 0%,rgba(255,255,255,0.01) 65%,rgba(124,58,237,0.05) 100%);
-  --nav-bg: rgba(8,8,14,0.48); --nav-glow: rgba(124,58,237,0.14);
-  --sec-bg: var(--bg); --sec-bg2: var(--bg2);
-  --loader-bg: var(--bg); --sb-track: var(--bg);
-}
+/* Dark only — no theme switching */
 
 html {
   scroll-behavior: smooth;
@@ -136,34 +77,117 @@ ul {
 }
 
 /* ==================== CUSTOM CURSOR ==================== */
+
+/* Dot — the hot-point */
 .cursor {
-  width: 10px;
-  height: 10px;
-  background: var(--accent2);
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   pointer-events: none;
-  z-index: 10000;
-  mix-blend-mode: difference;
+  z-index: 10001;
   will-change: transform;
+  opacity: 0;           /* hidden until first mousemove */
+
+  /* default: purple glow */
+  background: #a855f7;
+  box-shadow:
+    0 0 0 1.5px rgba(168, 85, 247, 0.25),
+    0 0 10px rgba(168, 85, 247, 0.9),
+    0 0 24px rgba(168, 85, 247, 0.5);
+
+  transition:
+    width 0.2s cubic-bezier(0.34,1.56,0.64,1),
+    height 0.2s cubic-bezier(0.34,1.56,0.64,1),
+    background 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
+/* Ring — the slow-following halo */
 .cursor-follower {
-  width: 36px;
-  height: 36px;
-  border: 1.5px solid var(--accent3);
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   pointer-events: none;
-  z-index: 9999;
-  transition: width 0.18s ease, height 0.18s ease, opacity 0.18s ease;
-  opacity: 0.6;
+  z-index: 10000;
   will-change: transform;
+  opacity: 0;           /* hidden until first mousemove */
+
+  /* default: glass ring */
+  border: 1.5px solid rgba(168, 85, 247, 0.4);
+  background: rgba(168, 85, 247, 0.04);
+  backdrop-filter: blur(2px);
+
+  transition:
+    width 0.28s cubic-bezier(0.34,1.56,0.64,1),
+    height 0.28s cubic-bezier(0.34,1.56,0.64,1),
+    border-color 0.2s ease,
+    background 0.2s ease,
+    border-radius 0.2s ease;
 }
+
+/* ── Link state (hover over a / button) — pink, expanded ── */
+.cursor[data-state="link"] {
+  width: 10px; height: 10px;
+  background: #ec4899;
+  box-shadow:
+    0 0 0 1.5px rgba(236, 72, 153, 0.25),
+    0 0 12px rgba(236, 72, 153, 1),
+    0 0 28px rgba(236, 72, 153, 0.55);
+}
+.cursor-follower[data-state="link"] {
+  width: 52px; height: 52px;
+  border-color: rgba(236, 72, 153, 0.55);
+  background: rgba(236, 72, 153, 0.07);
+}
+
+/* ── Card state (hover over cards) — cyan, wide ring ── */
+.cursor[data-state="card"] {
+  width: 7px; height: 7px;
+  background: #06b6d4;
+  box-shadow:
+    0 0 0 1.5px rgba(6, 182, 212, 0.25),
+    0 0 10px rgba(6, 182, 212, 1),
+    0 0 24px rgba(6, 182, 212, 0.5);
+}
+.cursor-follower[data-state="card"] {
+  width: 68px; height: 68px;
+  border-color: rgba(6, 182, 212, 0.3);
+  background: rgba(6, 182, 212, 0.04);
+}
+
+/* ── Text state (hover over inputs) — slim I-beam ring ── */
+.cursor[data-state="text"] {
+  width: 2px; height: 18px;
+  border-radius: 1px;
+  background: #a855f7;
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.8);
+}
+.cursor-follower[data-state="text"] {
+  width: 36px; height: 36px;
+  border-color: rgba(168, 85, 247, 0.2);
+  background: transparent;
+}
+
+/* ── Click pulse ── */
+.cursor.clicking {
+  transform: scale(0.7) !important; /* JS sets transform so this tweaks via filter */
+  filter: brightness(1.6);
+}
+.cursor-follower.clicking {
+  animation: followerPulse 0.35s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+@keyframes followerPulse {
+  0%   { transform: translate3d(var(--fx,0),var(--fy,0),0) scale(1);   opacity: 0.9; }
+  60%  { transform: translate3d(var(--fx,0),var(--fy,0),0) scale(1.5); opacity: 0.4; }
+  100% { transform: translate3d(var(--fx,0),var(--fy,0),0) scale(1);   opacity: 1;   }
+}
+
+body:hover .cursor,
+body:hover .cursor-follower { opacity: 1; }
 
 body:hover .cursor {
   transform: scale(1);
@@ -1962,31 +1986,6 @@ button:hover~.cursor {
 .contact { background: var(--sec-bg); }
 .footer  { background: var(--sec-bg2); }
 
-/* ── Theme toggle button ── */
-.theme-toggle {
-  position: relative;
-  z-index: 2;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 1px solid var(--gl-border);
-  background: var(--gl-bg);
-  backdrop-filter: var(--gl-blur);
-  -webkit-backdrop-filter: var(--gl-blur);
-  box-shadow: inset 0 1px 0 var(--gl-shine), 0 2px 8px var(--gl-drop);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: none;
-  font-size: 0.9rem;
-  color: var(--text2);
-  transition: color 0.2s, box-shadow 0.2s, background 0.2s;
-  flex-shrink: 0;
-}
-.theme-toggle:hover {
-  color: var(--accent2);
-  box-shadow: inset 0 1px 0 var(--gl-shine), 0 4px 16px var(--gl-glow);
-}
 
 /* ── BUTTONS ─────────────────────────────────────────────── */
 .btn {
@@ -2281,13 +2280,6 @@ button:hover~.cursor {
   -webkit-backdrop-filter: blur(40px) saturate(200%);
 }
 
-/* ── LIGHT THEME: form input fix ────────────────────────── */
-[data-theme="light"] .form-group input,
-[data-theme="light"] .form-group textarea {
-  background: rgba(255, 255, 255, 0.5);
-  color: var(--text);
-}
-
 /* ── RESPONSIVE: ensure glass still renders on mobile ───── */
 @media (max-width: 900px) {
   .skill-card, .project-card, .research-card,
@@ -2305,20 +2297,6 @@ button:hover~.cursor {
   }
 }
 
-/* ================================================================
-   HERO — ALWAYS DARK (regardless of theme)
-   The hero is an immersive dark canvas — locking it keeps it sharp
-   in both light and dark mode.
-   ================================================================ */
-.hero {
-  background: #0a0a0f !important;
-}
-/* Ensure hero text is always readable on dark */
-.hero .hero-desc  { color: #94a3b8 !important; }
-.hero .hero-scroll { color: #64748b !important; }
-[data-theme="light"] .hero .hero-title,
-[data-theme="light"] .hero-title { color: #e2e8f0; }
-[data-theme="light"] .hero .hero-name { /* gradient text stays vivid */ }
 
 /* ================================================================
    CURSOR-TRACKING LIQUID GLASS SPOTLIGHT
@@ -2414,50 +2392,3 @@ button:hover~.cursor {
 .skill-card:hover::after,
 .edu-card:hover::after { opacity: 1; }
 
-/* Light mode: softer pink/indigo lens instead of purple */
-[data-theme="light"] .project-card::before,
-[data-theme="light"] .research-card::before,
-[data-theme="light"] .exp-body::before,
-[data-theme="light"] .contact-item::before,
-[data-theme="light"] .contact-form::before,
-[data-theme="light"] .about-img-card::before,
-[data-theme="light"] .skill-card::after,
-[data-theme="light"] .edu-card::after {
-  background: radial-gradient(
-    260px circle at var(--mx) var(--my),
-    rgba(109, 40, 217, 0.1),
-    transparent 70%
-  );
-}
-[data-theme="light"] .btn::before {
-  background: radial-gradient(
-    90px circle at var(--mx) var(--my),
-    rgba(255, 255, 255, 0.5),
-    transparent 75%
-  );
-}
-
-/* ── Light mode: section label + accent3 text fix ── */
-[data-theme="light"] .section-label,
-[data-theme="light"] .edu-badge,
-[data-theme="light"] .research-badge { color: var(--accent2); }
-[data-theme="light"] .edu-inst        { color: var(--accent2); }
-[data-theme="light"] .exp-company     { color: var(--accent2); }
-[data-theme="light"] .exp-duration    { color: var(--cyan); border-color: rgba(3,105,161,0.3); background: rgba(3,105,161,0.08); }
-[data-theme="light"] .tag,
-[data-theme="light"] .project-tags span,
-[data-theme="light"] .edu-tags span,
-[data-theme="light"] .exp-tags span   { color: var(--accent2); border-color: rgba(109,40,217,0.25); background: rgba(109,40,217,0.08); }
-[data-theme="light"] .skill-icon      { background: linear-gradient(135deg, var(--accent), var(--pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-[data-theme="light"] .hero-tag        { background: rgba(21,128,61,0.1); border-color: rgba(21,128,61,0.3); box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 12px rgba(21,128,61,0.1); }
-[data-theme="light"] .stat-num        { background: linear-gradient(135deg, var(--accent), var(--pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-[data-theme="light"] .stat span       { color: var(--accent2); }
-[data-theme="light"] .stat p          { color: var(--text3); }
-/* Light loader always has dark look */
-[data-theme="light"] .loader          { background: #1e1b4b; }
-[data-theme="light"] .loader-sub      { color: rgba(255,255,255,0.4); }
-/* Nav link active pill in light */
-[data-theme="light"] .nav-link        { color: rgba(30,27,75,0.7); }
-[data-theme="light"] .nav-link:hover  { color: var(--accent2); }
-[data-theme="light"] .nav-link.active { color: var(--accent); background: rgba(109,40,217,0.1); }
-[data-theme="light"] .nav-logo        { background: linear-gradient(135deg, var(--accent), var(--pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }

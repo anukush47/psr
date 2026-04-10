@@ -2,33 +2,8 @@
    PORTFOLIO — Main Script
    ============================================================ */
 
-// ==================== THEME TOGGLE ====================
-const root = document.documentElement;
-const themeToggleBtn = document.getElementById('themeToggle');
-const themeIcon      = document.getElementById('themeIcon');
-
-// Resolve initial theme: saved preference → system → dark
-function getInitialTheme() {
-  const saved = localStorage.getItem('psr-theme');
-  if (saved) return saved;
-  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-}
-
-function applyTheme(theme) {
-  root.setAttribute('data-theme', theme);
-  localStorage.setItem('psr-theme', theme);
-  themeIcon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-  // Update particle colours to match theme
-  particleColorDark  = theme === 'dark';
-}
-
-themeToggleBtn.addEventListener('click', () => {
-  const current = root.getAttribute('data-theme') || 'dark';
-  applyTheme(current === 'dark' ? 'light' : 'dark');
-});
-
-let particleColorDark = true; // controlled by applyTheme
-applyTheme(getInitialTheme());
+// Always dark
+document.documentElement.removeAttribute('data-theme');
 
 // ==================== LOADER ====================
 window.addEventListener('load', () => {
@@ -42,33 +17,59 @@ window.addEventListener('load', () => {
 });
 
 // ==================== CURSOR ====================
-const cursor = document.getElementById('cursor');
+const cursor   = document.getElementById('cursor');
 const follower = document.getElementById('cursorFollower');
 let mx = 0, my = 0, fx = 0, fy = 0;
+let cursorVisible = false;
 
+// Show cursor only after first mouse move (avoids flash at 0,0)
 document.addEventListener('mousemove', e => {
   mx = e.clientX; my = e.clientY;
-  cursor.style.transform = `translate3d(${mx - 5}px, ${my - 5}px, 0)`;
+  if (!cursorVisible) {
+    cursor.style.opacity   = '1';
+    follower.style.opacity = '1';
+    cursorVisible = true;
+  }
+  cursor.style.transform = `translate3d(${mx - 4}px, ${my - 4}px, 0)`;
 }, { passive: true });
 
+// Silky lerp follower
 function animateFollower() {
-  fx += (mx - fx) * 0.09;
-  fy += (my - fy) * 0.09;
-  follower.style.transform = `translate3d(${fx - 18}px, ${fy - 18}px, 0)`;
+  fx += (mx - fx) * 0.1;
+  fy += (my - fy) * 0.1;
+  follower.style.transform = `translate3d(${fx - 20}px, ${fy - 20}px, 0)`;
   requestAnimationFrame(animateFollower);
 }
 animateFollower();
 
-document.querySelectorAll('a, button, .project-card, .skill-card').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursor.style.transform += ' scale(2)';
-    follower.style.width = '56px';
-    follower.style.height = '56px';
-  });
-  el.addEventListener('mouseleave', () => {
-    follower.style.width = '36px';
-    follower.style.height = '36px';
-  });
+// Click ripple on the dot
+document.addEventListener('mousedown', () => cursor.classList.add('clicking'));
+document.addEventListener('mouseup',   () => cursor.classList.remove('clicking'));
+
+// ── State helpers ──
+function setCursor(state) {
+  cursor.dataset.state   = state;
+  follower.dataset.state = state;
+}
+
+// Links & buttons → pink "pointer" state
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => setCursor('link'));
+  el.addEventListener('mouseleave', () => setCursor(''));
+});
+
+// Cards → expanded "explore" state (cyan tint)
+document.querySelectorAll(
+  '.project-card, .skill-card, .research-card, .edu-card, .exp-body, .about-img-card'
+).forEach(el => {
+  el.addEventListener('mouseenter', () => setCursor('card'));
+  el.addEventListener('mouseleave', () => setCursor(''));
+});
+
+// Text areas → I-beam follower hint
+document.querySelectorAll('input, textarea').forEach(el => {
+  el.addEventListener('mouseenter', () => setCursor('text'));
+  el.addEventListener('mouseleave', () => setCursor(''));
 });
 
 // ==================== NAV SCROLL ====================
@@ -150,14 +151,8 @@ class Particle {
     this.size = Math.random() * 1.5 + 0.4;
     this.vx = (Math.random() - 0.5) * 0.3;
     this.vy = (Math.random() - 0.5) * 0.3;
-    // Dark mode: vivid purple/pink. Light mode: softer purple/blue.
-    const dark = ['#7c3aed','#ec4899'];
-    const light = ['#a855f7','#7c3aed'];
-    const palette = particleColorDark ? dark : light;
-    this.alpha = particleColorDark
-      ? Math.random() * 0.4 + 0.08
-      : Math.random() * 0.25 + 0.06;
-    this.color = palette[Math.floor(Math.random() * palette.length)];
+    this.alpha = Math.random() * 0.4 + 0.08;
+    this.color = Math.random() > 0.5 ? '#7c3aed' : '#ec4899';
   }
   update() {
     this.x += this.vx;
@@ -191,8 +186,7 @@ function drawConnections() {
         ctx.beginPath();
         ctx.moveTo(particles[i].x, particles[i].y);
         ctx.lineTo(particles[j].x, particles[j].y);
-        const lineAlpha = (1 - dist / CONNECT_DIST) * (particleColorDark ? 0.12 : 0.08);
-        ctx.strokeStyle = `rgba(124, 58, 237, ${lineAlpha})`;
+        ctx.strokeStyle = `rgba(124, 58, 237, ${(1 - dist / CONNECT_DIST) * 0.12})`;
         ctx.lineWidth = 0.5;
         ctx.stroke();
       }
