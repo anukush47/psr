@@ -5,8 +5,9 @@
    ============================================================ */
 
 import * as THREE from 'three';
-import { GLTFLoader }  from 'three/addons/loaders/GLTFLoader.js';
-import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { GLTFLoader }    from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader }   from 'three/addons/loaders/DRACOLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 
 const canvas  = document.getElementById('robotCanvas');
 const avatar  = document.getElementById('robotAvatar');
@@ -29,14 +30,13 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping      = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.3;
-renderer.shadowMap.enabled   = true;
-renderer.shadowMap.type      = THREE.PCFSoftShadowMap;
-renderer.setClearColor(0x000000, 0); // fully transparent
+renderer.shadowMap.enabled   = false; // off — saves GPU on 180px canvas
+renderer.setClearColor(0x000000, 0);  // fully transparent
 
 // ── Scene & Camera ────────────────────────────────────────
 const scene  = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(42, 1, 0.01, 100);
-camera.position.set(0, 0.4, 3.8);
+const camera = new THREE.PerspectiveCamera(38, 1, 0.01, 100);
+camera.position.set(0, 0.5, 4.5);
 camera.lookAt(0, 0, 0);
 
 // ── Lighting ──────────────────────────────────────────────
@@ -73,6 +73,7 @@ dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/
 
 const loader = new GLTFLoader();
 loader.setDRACOLoader(dracoLoader);
+loader.setMeshoptDecoder(MeshoptDecoder); // needed for gltf-transform meshopt output
 
 let model  = null;
 let mixer  = null;
@@ -83,18 +84,19 @@ loader.load(
   (gltf) => {
     model = gltf.scene;
 
-    // ── Auto-fit model to our camera frustum ──
+    // ── Auto-fit model to camera frustum ──
     const box    = new THREE.Box3().setFromObject(model);
     const center = box.getCenter(new THREE.Vector3());
     const size   = box.getSize(new THREE.Vector3());
+    // Use the taller of height/width so the whole body fits the circle
     const maxDim = Math.max(size.x, size.y, size.z);
 
-    const scale = 2.2 / maxDim;          // fill ~80% of the canvas
+    // 1.55 keeps the full model inside the inscribed circle (canvas is clipped to 50%)
+    const scale = 1.55 / maxDim;
     model.scale.setScalar(scale);
 
-    // Centre on origin, nudge down so head is near top of circle
+    // Centre perfectly on origin — no vertical nudge that clips feet/head
     model.position.copy(center.multiplyScalar(-scale));
-    model.position.y -= size.y * scale * 0.12;
 
     // ── Material tweaks — tinted to match theme ──
     model.traverse((child) => {
@@ -103,8 +105,8 @@ loader.load(
         child.receiveShadow = true;
         const mat = child.material;
         // Boost metalness/roughness for a sleeker look
-        if (mat.metalness !== undefined) mat.metalness = Math.max(mat.metalness, 0.35);
-        if (mat.roughness !== undefined) mat.roughness = Math.min(mat.roughness, 0.65);
+        if (mat.metalness !== undefined) mat.metalness = Math.max(mat.metalness, 0.4);
+        if (mat.roughness !== undefined) mat.roughness = Math.min(mat.roughness, 0.6);
         mat.needsUpdate = true;
       }
     });
