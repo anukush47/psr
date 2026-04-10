@@ -10,6 +10,15 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Three.js import map for GLB model -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
 </head>
 
 <body>
@@ -113,12 +122,12 @@
           </div>
         </div>
 
-        <!-- Central avatar -->
+        <!-- Central avatar — 3D robot -->
         <div class="av-core">
           <div class="av-pulse-ring"></div>
           <div class="av-pulse-ring" style="animation-delay:1.2s"></div>
-          <div class="av-face">
-            <span>👩‍💻</span>
+          <div class="av-face" id="robotAvatar">
+            <canvas id="robotCanvas"></canvas>
           </div>
         </div>
 
@@ -694,6 +703,7 @@
   </footer>
 
   <script src="script.js"></script>
+  <script type="module" src="robot.js"></script>
 </body>
 
 </html>
