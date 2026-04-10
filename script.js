@@ -2,6 +2,34 @@
    PORTFOLIO — Main Script
    ============================================================ */
 
+// ==================== THEME TOGGLE ====================
+const root = document.documentElement;
+const themeToggleBtn = document.getElementById('themeToggle');
+const themeIcon      = document.getElementById('themeIcon');
+
+// Resolve initial theme: saved preference → system → dark
+function getInitialTheme() {
+  const saved = localStorage.getItem('psr-theme');
+  if (saved) return saved;
+  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+}
+
+function applyTheme(theme) {
+  root.setAttribute('data-theme', theme);
+  localStorage.setItem('psr-theme', theme);
+  themeIcon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+  // Update particle colours to match theme
+  particleColorDark  = theme === 'dark';
+}
+
+themeToggleBtn.addEventListener('click', () => {
+  const current = root.getAttribute('data-theme') || 'dark';
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+});
+
+let particleColorDark = true; // controlled by applyTheme
+applyTheme(getInitialTheme());
+
 // ==================== LOADER ====================
 window.addEventListener('load', () => {
   setTimeout(() => {
@@ -122,8 +150,14 @@ class Particle {
     this.size = Math.random() * 1.5 + 0.4;
     this.vx = (Math.random() - 0.5) * 0.3;
     this.vy = (Math.random() - 0.5) * 0.3;
-    this.alpha = Math.random() * 0.4 + 0.08;
-    this.color = Math.random() > 0.5 ? '#7c3aed' : '#ec4899';
+    // Dark mode: vivid purple/pink. Light mode: softer purple/blue.
+    const dark = ['#7c3aed','#ec4899'];
+    const light = ['#a855f7','#7c3aed'];
+    const palette = particleColorDark ? dark : light;
+    this.alpha = particleColorDark
+      ? Math.random() * 0.4 + 0.08
+      : Math.random() * 0.25 + 0.06;
+    this.color = palette[Math.floor(Math.random() * palette.length)];
   }
   update() {
     this.x += this.vx;
@@ -157,7 +191,8 @@ function drawConnections() {
         ctx.beginPath();
         ctx.moveTo(particles[i].x, particles[i].y);
         ctx.lineTo(particles[j].x, particles[j].y);
-        ctx.strokeStyle = `rgba(124, 58, 237, ${(1 - dist / CONNECT_DIST) * 0.12})`;
+        const lineAlpha = (1 - dist / CONNECT_DIST) * (particleColorDark ? 0.12 : 0.08);
+        ctx.strokeStyle = `rgba(124, 58, 237, ${lineAlpha})`;
         ctx.lineWidth = 0.5;
         ctx.stroke();
       }

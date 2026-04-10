@@ -44,10 +44,15 @@
       <li><a href="#skills" class="nav-link">Skills</a></li>
       <li><a href="#projects" class="nav-link">Projects</a></li>
     </ul>
-    <a href="#contact" class="nav-cta">Let's Talk</a>
-    <button class="hamburger" id="hamburger">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="nav-toggle-wrap" style="display:flex;align-items:center;gap:0.6rem;position:relative;z-index:2;">
+      <a href="#contact" class="nav-cta">Let's Talk</a>
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle light/dark theme">
+        <i class="fas fa-moon" id="themeIcon"></i>
+      </button>
+      <button class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </nav>
 
   <!-- Mobile Menu -->

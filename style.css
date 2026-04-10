@@ -7,25 +7,139 @@
   box-sizing: border-box;
 }
 
+/* ── DARK THEME (default) ─────────────────────────────── */
 :root {
-  --bg: #0a0a0f;
-  --bg2: #0f0f18;
-  --bg3: #13131f;
+  --bg:      #0a0a0f;
+  --bg2:     #0f0f18;
+  --bg3:     #13131f;
   --surface: #1a1a2e;
-  --surface2: #1e1e32;
-  --accent: #7c3aed;
+  --surface2:#1e1e32;
+  --accent:  #7c3aed;
   --accent2: #a855f7;
   --accent3: #c084fc;
-  --pink: #ec4899;
-  --cyan: #06b6d4;
-  --green: #22c55e;
-  --text: #e2e8f0;
-  --text2: #94a3b8;
-  --text3: #64748b;
-  --border: rgba(124, 58, 237, 0.2);
-  --glow: 0 0 40px rgba(124, 58, 237, 0.3);
-  --radius: 16px;
+  --pink:    #ec4899;
+  --cyan:    #06b6d4;
+  --green:   #22c55e;
+  --text:    #e2e8f0;
+  --text2:   #94a3b8;
+  --text3:   #64748b;
+  --border:  rgba(124, 58, 237, 0.2);
+  --glow:    0 0 40px rgba(124, 58, 237, 0.3);
+  --radius:  16px;
   --radius-sm: 8px;
+
+  /* ── Glass system ── */
+  --gl-bg:       rgba(10, 8, 22, 0.52);
+  --gl-border:   rgba(255, 255, 255, 0.08);
+  --gl-shine:    rgba(255, 255, 255, 0.13);
+  --gl-depth:    rgba(0, 0, 0, 0.28);
+  --gl-drop:     rgba(0, 0, 0, 0.45);
+  --gl-glow:     rgba(124, 58, 237, 0.14);
+  --gl-blur:     blur(20px) saturate(180%);
+  --gl-grad:     linear-gradient(135deg,
+                   rgba(255,255,255,0.07) 0%,
+                   rgba(255,255,255,0.01) 65%,
+                   rgba(124,58,237,0.05) 100%);
+  /* nav glass */
+  --nav-bg:      rgba(8, 8, 14, 0.48);
+  --nav-glow:    rgba(124, 58, 237, 0.14);
+  /* section backgrounds for glass sections */
+  --sec-bg:      var(--bg);
+  --sec-bg2:     var(--bg2);
+  /* loader */
+  --loader-bg:   var(--bg);
+  /* scrollbar */
+  --sb-track:    var(--bg);
+}
+
+/* ── LIGHT THEME ─────────────────────────────────────── */
+/* System preference */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg:      #f2f2fb;
+    --bg2:     #eaeaf7;
+    --bg3:     #e3e3f3;
+    --surface: rgba(255,255,255,0.75);
+    --surface2:rgba(255,255,255,0.55);
+    --accent:  #7c3aed;
+    --accent2: #a855f7;
+    --accent3: #7c3aed;
+    --pink:    #ec4899;
+    --cyan:    #0891b2;
+    --green:   #16a34a;
+    --text:    #16162a;
+    --text2:   #4b4b78;
+    --text3:   #8888b0;
+    --border:  rgba(124, 58, 237, 0.18);
+    --glow:    0 0 40px rgba(124, 58, 237, 0.12);
+
+    --gl-bg:     rgba(255, 255, 255, 0.52);
+    --gl-border: rgba(255, 255, 255, 0.72);
+    --gl-shine:  rgba(255, 255, 255, 0.95);
+    --gl-depth:  rgba(100, 80, 200, 0.07);
+    --gl-drop:   rgba(100, 80, 200, 0.1);
+    --gl-glow:   rgba(124, 58, 237, 0.08);
+    --gl-grad:   linear-gradient(135deg,
+                   rgba(255,255,255,0.55) 0%,
+                   rgba(255,255,255,0.15) 65%,
+                   rgba(124,58,237,0.04) 100%);
+    --nav-bg:    rgba(255, 255, 255, 0.52);
+    --nav-glow:  rgba(124, 58, 237, 0.08);
+    --sec-bg:    var(--bg);
+    --sec-bg2:   var(--bg2);
+    --loader-bg: var(--bg);
+    --sb-track:  var(--bg2);
+  }
+}
+/* Manual override — always light */
+[data-theme="light"] {
+  --bg:      #f2f2fb;
+  --bg2:     #eaeaf7;
+  --bg3:     #e3e3f3;
+  --surface: rgba(255,255,255,0.75);
+  --surface2:rgba(255,255,255,0.55);
+  --accent:  #7c3aed;
+  --accent2: #a855f7;
+  --accent3: #7c3aed;
+  --pink:    #ec4899;
+  --cyan:    #0891b2;
+  --green:   #16a34a;
+  --text:    #16162a;
+  --text2:   #4b4b78;
+  --text3:   #8888b0;
+  --border:  rgba(124, 58, 237, 0.18);
+  --glow:    0 0 40px rgba(124, 58, 237, 0.12);
+
+  --gl-bg:     rgba(255, 255, 255, 0.52);
+  --gl-border: rgba(255, 255, 255, 0.72);
+  --gl-shine:  rgba(255, 255, 255, 0.95);
+  --gl-depth:  rgba(100, 80, 200, 0.07);
+  --gl-drop:   rgba(100, 80, 200, 0.1);
+  --gl-glow:   rgba(124, 58, 237, 0.08);
+  --gl-grad:   linear-gradient(135deg,
+                 rgba(255,255,255,0.55) 0%,
+                 rgba(255,255,255,0.15) 65%,
+                 rgba(124,58,237,0.04) 100%);
+  --nav-bg:    rgba(255, 255, 255, 0.52);
+  --nav-glow:  rgba(124, 58, 237, 0.08);
+  --sec-bg:    var(--bg);
+  --sec-bg2:   var(--bg2);
+  --loader-bg: var(--bg);
+  --sb-track:  var(--bg2);
+}
+/* Manual override — always dark */
+[data-theme="dark"] {
+  --bg:      #0a0a0f; --bg2: #0f0f18; --bg3: #13131f;
+  --surface: #1a1a2e; --surface2: #1e1e32;
+  --text: #e2e8f0; --text2: #94a3b8; --text3: #64748b;
+  --border: rgba(124,58,237,0.2); --glow: 0 0 40px rgba(124,58,237,0.3);
+  --gl-bg: rgba(10,8,22,0.52); --gl-border: rgba(255,255,255,0.08);
+  --gl-shine: rgba(255,255,255,0.13); --gl-depth: rgba(0,0,0,0.28);
+  --gl-drop: rgba(0,0,0,0.45); --gl-glow: rgba(124,58,237,0.14);
+  --gl-grad: linear-gradient(135deg,rgba(255,255,255,0.07) 0%,rgba(255,255,255,0.01) 65%,rgba(124,58,237,0.05) 100%);
+  --nav-bg: rgba(8,8,14,0.48); --nav-glow: rgba(124,58,237,0.14);
+  --sec-bg: var(--bg); --sec-bg2: var(--bg2);
+  --loader-bg: var(--bg); --sb-track: var(--bg);
 }
 
 html {
@@ -38,6 +152,7 @@ body {
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
   cursor: none;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
 a {
@@ -210,18 +325,18 @@ button:hover~.cursor {
   overflow: hidden;
 
   /* Liquid glass base */
-  background: rgba(8, 8, 14, 0.48);
+  background: var(--nav-bg);
   backdrop-filter: blur(30px) saturate(180%);
   -webkit-backdrop-filter: blur(30px) saturate(180%);
 
   /* Glass borders + layered shadows */
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--gl-border);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.13),  /* top edge shine */
-    inset 0 -1px 0 rgba(0, 0, 0, 0.25),         /* bottom inner shadow */
-    0 4px 24px rgba(0, 0, 0, 0.5),              /* drop shadow */
-    0 0 0 0.5px rgba(255, 255, 255, 0.04),      /* outer rim */
-    0 8px 48px rgba(124, 58, 237, 0.14);        /* brand glow */
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 4px 24px var(--gl-drop),
+    0 0 0 0.5px rgba(255, 255, 255, 0.04),
+    0 8px 48px var(--nav-glow);
 
   transition: box-shadow 0.4s ease, background 0.4s ease, top 0.4s ease;
 }
@@ -264,13 +379,12 @@ button:hover~.cursor {
 
 /* Stronger glass when scrolled */
 .nav.scrolled {
-  background: rgba(8, 8, 14, 0.68);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.13),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.25),
-    0 8px 40px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 8px 40px var(--gl-drop),
     0 0 0 0.5px rgba(255, 255, 255, 0.06),
-    0 12px 60px rgba(124, 58, 237, 0.22);
+    0 12px 60px var(--nav-glow);
 }
 
 /* All children above pseudo-elements */
@@ -1827,21 +1941,402 @@ button:hover~.cursor {
 }
 
 /* ==================== SCROLLBAR ==================== */
-::-webkit-scrollbar {
-  width: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  border-radius: 3px;
-}
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--sb-track); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
 
 /* ==================== SELECTION ==================== */
-::selection {
-  background: rgba(124, 58, 237, 0.3);
+::selection { background: rgba(124, 58, 237, 0.3); color: var(--text); }
+
+/* ================================================================
+   LIQUID GLASS — UNIVERSAL SYSTEM
+   All buttons, cards, tiles, pills share these glass variables.
+   Light/dark theme is handled via CSS custom properties above.
+   ================================================================ */
+
+/* ── Shared glass mixin applied via utility class ── */
+.gl {
+  background: var(--gl-bg);
+  backdrop-filter: var(--gl-blur);
+  -webkit-backdrop-filter: var(--gl-blur);
+  border: 1px solid var(--gl-border);
+  box-shadow:
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 4px 24px var(--gl-drop),
+    0 0 32px var(--gl-glow);
+  position: relative;
+  overflow: hidden;
+}
+.gl::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--gl-grad);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Loader ── */
+.loader { background: var(--loader-bg); }
+
+/* ── Section backgrounds ── */
+.about   { background: var(--sec-bg2); }
+.skills  { background: var(--sec-bg); }
+.projects{ background: var(--sec-bg2); }
+.research{ background: var(--sec-bg2); }
+.education{ background: var(--sec-bg); }
+.experience{ background: var(--sec-bg); }
+.contact { background: var(--sec-bg); }
+.footer  { background: var(--sec-bg2); }
+
+/* ── Theme toggle button ── */
+.theme-toggle {
+  position: relative;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--gl-border);
+  background: var(--gl-bg);
+  backdrop-filter: var(--gl-blur);
+  -webkit-backdrop-filter: var(--gl-blur);
+  box-shadow: inset 0 1px 0 var(--gl-shine), 0 2px 8px var(--gl-drop);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+  font-size: 0.9rem;
+  color: var(--text2);
+  transition: color 0.2s, box-shadow 0.2s, background 0.2s;
+  flex-shrink: 0;
+}
+.theme-toggle:hover {
+  color: var(--accent2);
+  box-shadow: inset 0 1px 0 var(--gl-shine), 0 4px 16px var(--gl-glow);
+}
+
+/* ── BUTTONS ─────────────────────────────────────────────── */
+.btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Shared glass gloss layer on all buttons */
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.14), transparent);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 60%, var(--pink) 100%);
+  background-size: 200% 100%;
+  background-position: 0% 0%;
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.22),
+    0 4px 20px rgba(124, 58, 237, 0.45),
+    0 0 0 1px rgba(124, 58, 237, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-position 0.4s ease;
+}
+.btn-primary:hover {
+  background-position: 100% 0%;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.28),
+    0 8px 32px rgba(124, 58, 237, 0.65),
+    0 0 0 1px rgba(168, 85, 247, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: var(--gl-bg);
+  backdrop-filter: var(--gl-blur);
+  -webkit-backdrop-filter: var(--gl-blur);
   color: var(--text);
+  border: 1px solid var(--gl-border);
+  box-shadow:
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 4px 16px var(--gl-drop);
+}
+.btn-outline:hover {
+  border-color: rgba(168, 85, 247, 0.45);
+  box-shadow:
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 6px 24px var(--gl-drop),
+    0 0 20px var(--gl-glow);
+  transform: translateY(-2px);
+}
+
+/* Nav CTA glass shine */
+.nav-cta {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.22),
+    0 2px 12px rgba(124, 58, 237, 0.45);
+}
+.nav-cta::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.16), transparent);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* ── SKILL CARDS ─────────────────────────────────────────── */
+.skill-card {
+  background: var(--gl-bg);
+  backdrop-filter: var(--gl-blur);
+  -webkit-backdrop-filter: var(--gl-blur);
+  border: 1px solid var(--gl-border);
+  box-shadow:
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 4px 20px var(--gl-drop),
+    0 0 0 0.5px rgba(255,255,255,0.03);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+/* skill-card::before is the top accent bar — keep it, add overlay via ::after only when not hovering */
+.skill-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow:
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 12px 36px var(--gl-drop),
+    0 0 32px var(--gl-glow);
+}
+
+/* ── PROJECT CARDS ───────────────────────────────────────── */
+.project-card {
+  background: var(--gl-bg);
+  backdrop-filter: var(--gl-blur);
+  -webkit-backdrop-filter: var(--gl-blur);
+  border: 1px solid var(--gl-border);
+  box-shadow:
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 4px 24px var(--gl-drop);
+}
+.project-card:hover {
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow:
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 16px 48px var(--gl-drop),
+    0 0 40px var(--gl-glow);
+}
+
+/* ── RESEARCH CARDS ─────────────────────────────────────── */
+.research-card {
+  background: var(--gl-bg);
+  backdrop-filter: var(--gl-blur);
+  -webkit-backdrop-filter: var(--gl-blur);
+  border: 1px solid var(--gl-border);
+  box-shadow:
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 4px 24px var(--gl-drop);
+}
+.research-card.featured {
+  border-color: rgba(168, 85, 247, 0.3);
+  box-shadow:
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 6px 32px var(--gl-drop),
+    0 0 40px var(--gl-glow);
+}
+.research-card:hover {
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow:
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 16px 48px var(--gl-drop),
+    0 0 48px var(--gl-glow);
+}
+
+/* ── EDUCATION CARDS ────────────────────────────────────── */
+.edu-card {
+  background: var(--gl-bg);
+  backdrop-filter: var(--gl-blur);
+  -webkit-backdrop-filter: var(--gl-blur);
+  border: 1px solid var(--gl-border);
+  box-shadow:
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 4px 20px var(--gl-drop);
+}
+.edu-card:hover {
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow:
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 12px 36px var(--gl-drop),
+    0 0 32px var(--gl-glow);
+}
+/* edu-card::before is the top accent line — keep */
+
+/* ── EXPERIENCE CARDS ───────────────────────────────────── */
+.exp-body {
+  background: var(--gl-bg);
+  backdrop-filter: var(--gl-blur);
+  -webkit-backdrop-filter: var(--gl-blur);
+  border: 1px solid var(--gl-border);
+  box-shadow:
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 4px 20px var(--gl-drop);
+}
+.exp-body:hover {
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow:
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 8px 32px var(--gl-drop),
+    0 0 28px var(--gl-glow);
+}
+
+/* ── ABOUT STATS CARD ───────────────────────────────────── */
+.about-img-card {
+  background: var(--gl-bg);
+  backdrop-filter: var(--gl-blur);
+  -webkit-backdrop-filter: var(--gl-blur);
+  border: 1px solid var(--gl-border);
+  box-shadow:
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 8px 32px var(--gl-drop),
+    0 0 32px var(--gl-glow);
+}
+
+/* ── CONTACT ITEMS ──────────────────────────────────────── */
+.contact-item {
+  background: var(--gl-bg);
+  backdrop-filter: var(--gl-blur);
+  -webkit-backdrop-filter: var(--gl-blur);
+  border: 1px solid var(--gl-border);
+  box-shadow:
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 4px 16px var(--gl-drop);
+}
+.contact-item:hover {
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow:
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 8px 28px var(--gl-drop),
+    0 0 24px var(--gl-glow);
+}
+
+/* ── CONTACT FORM ───────────────────────────────────────── */
+.contact-form {
+  background: var(--gl-bg);
+  backdrop-filter: var(--gl-blur);
+  -webkit-backdrop-filter: var(--gl-blur);
+  border: 1px solid var(--gl-border);
+  box-shadow:
+    inset 0 1px 0 var(--gl-shine),
+    inset 0 -1px 0 var(--gl-depth),
+    0 8px 40px var(--gl-drop),
+    0 0 32px var(--gl-glow);
+}
+
+.form-group input,
+.form-group textarea {
+  background: rgba(0,0,0,0.15);
+  border: 1px solid var(--gl-border);
+  color: var(--text);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+[data-theme="light"] .form-group input,
+[data-theme="light"] .form-group textarea,
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .form-group input,
+  :root:not([data-theme="dark"]) .form-group textarea {
+    background: rgba(255,255,255,0.4);
+  }
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--accent2);
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15), inset 0 1px 0 var(--gl-shine);
+  outline: none;
+}
+
+/* ── TAGS & PILLS ───────────────────────────────────────── */
+.tag,
+.project-tags span,
+.edu-tags span,
+.exp-tags span,
+.research-badge,
+.edu-badge,
+.exp-duration {
+  background: var(--gl-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--gl-border);
+  box-shadow: inset 0 1px 0 var(--gl-shine);
+  transition: background 0.2s, border-color 0.2s;
+}
+.tag:hover { background: rgba(124, 58, 237, 0.2); border-color: rgba(168,85,247,0.4); }
+
+/* ── HERO TAG ───────────────────────────────────────────── */
+.hero-tag {
+  background: var(--gl-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 12px rgba(34,197,94,0.1);
+  color: var(--green);
+}
+
+/* ── MOBILE MENU (glass overlay) ───────────────────────── */
+.mobile-menu {
+  background: var(--gl-bg);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+}
+
+/* ── LIGHT THEME: form input fix ────────────────────────── */
+[data-theme="light"] .form-group input,
+[data-theme="light"] .form-group textarea {
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--text);
+}
+
+/* ── LIGHT THEME: particle canvas tint ─────────────────── */
+/* Handled in JS via particleColorLight variable */
+
+/* ── RESPONSIVE: ensure glass still renders on mobile ───── */
+@media (max-width: 900px) {
+  /* Reduce blur on low-end mobile for perf */
+  .skill-card, .project-card, .research-card,
+  .edu-card, .exp-body, .contact-item, .contact-form, .about-img-card {
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+  }
+  .nav-toggle-wrap {
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .skill-card, .project-card, .research-card,
+  .edu-card, .exp-body, .contact-item, .contact-form, .about-img-card {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
 }
