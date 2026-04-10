@@ -86,9 +86,6 @@ loader.load(
   (gltf) => {
     model = gltf.scene;
 
-    // gltf-transform flatten flips the Y axis — rotate 180° to stand upright
-    model.rotation.z = Math.PI;
-
     // ── Auto-fit: measure all 3 axes, log them so we can see orientation ──
     const box0  = new THREE.Box3().setFromObject(model);
     const size0 = box0.getSize(new THREE.Vector3());
