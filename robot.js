@@ -15,8 +15,8 @@ const hero    = document.getElementById('hero');
 
 if (!canvas || !hero) throw new Error('Robot: required DOM elements missing.');
 
-// Canvas 200×250px: robot fills 75% = ~187px, head ~40px above circle
-const W = 200, H = 250;
+// Canvas 220×360px: full body visible, feet at circle, head above ring
+const W = 220, H = 360;
 
 // ── Renderer ──────────────────────────────────────────────
 const renderer = new THREE.WebGLRenderer({
@@ -89,9 +89,9 @@ loader.load(
     const size0 = box0.getSize(new THREE.Vector3());
     console.log('[robot] raw size x/y/z:', size0.x.toFixed(2), size0.y.toFixed(2), size0.z.toFixed(2));
 
-    // Robot fills 75% of frustum height → ~187px in 250px canvas
+    // Scale to fill 80% of canvas height → full body fits with breathing room
     const heightDim = Math.max(size0.y, size0.z);
-    const scale = 2.1 / heightDim;
+    const scale = 1.8 / heightDim;
     model.scale.setScalar(scale);
 
     // Re-measure AFTER scaling for accurate world-space centre

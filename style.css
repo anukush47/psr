@@ -911,17 +911,17 @@ button:hover~.cursor {
   will-change: transform;
 }
 
-/* Canvas: feet at circle base, head overlaps ~40px above circle top */
+/* Canvas: feet at circle base, full body visible above ring */
 #robotCanvas {
   position: absolute;
-  width: 200px !important;
-  height: 250px !important;
+  width: 220px !important;
+  height: 360px !important;
   left: 50%;
   transform: translateX(-50%);
   bottom: 0;
   display: block;
   pointer-events: none;
-  z-index: 20;                /* above orbit rings and chips */
+  z-index: 20;
 }
 
 /* Loading shimmer while model downloads */
