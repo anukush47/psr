@@ -15,8 +15,9 @@ const hero    = document.getElementById('hero');
 
 if (!canvas || !hero) throw new Error('Robot: required DOM elements missing.');
 
-// ── Dimensions: portrait canvas, robot ~250px tall over 180px circle ──
-const W = 210, H = 310;
+// ── Canvas: 240×280px. Robot fills 85% = ~240px tall.
+//    Feet inside circle ring, head+shoulders 80px above it. ──────────
+const W = 240, H = 280;
 
 // ── Renderer ──────────────────────────────────────────────
 const renderer = new THREE.WebGLRenderer({
@@ -35,7 +36,7 @@ renderer.setClearColor(0x000000, 0); // fully transparent
 
 // ── Scene & Camera ────────────────────────────────────────
 const scene  = new THREE.Scene();
-// FOV 50, z=3.0 → frustum height 2.8 units; scale 2.4 fills 85% = ~264px robot
+// FOV 50, aspect 240/280=0.857, z=3.0 → frustum h=2.8 units; scale 2.4 = 85% fill
 const camera = new THREE.PerspectiveCamera(50, W / H, 0.01, 100);
 camera.position.set(0, 0, 3.0);
 camera.lookAt(0, 0, 0);

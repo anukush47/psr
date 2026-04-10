@@ -911,14 +911,14 @@ button:hover~.cursor {
   will-change: transform;
 }
 
-/* Canvas floats over circle — robot feet at circle base, head above */
+/* Canvas: robot stands IN the circle ring, body/head rise above it */
 #robotCanvas {
   position: absolute;
-  width: 210px !important;
-  height: 310px !important;
+  width: 240px !important;
+  height: 280px !important;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 5px;                /* feet rest just inside circle bottom */
+  bottom: 0;                  /* canvas bottom = circle bottom */
   display: block;
   pointer-events: none;
   z-index: 5;
