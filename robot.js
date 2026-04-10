@@ -15,8 +15,8 @@ const hero    = document.getElementById('hero');
 
 if (!canvas || !hero) throw new Error('Robot: required DOM elements missing.');
 
-// ── Dimensions — tall portrait canvas so robot stands over the circle ──
-const W = 260, H = 360;
+// ── Dimensions: portrait canvas, robot ~250px tall over 180px circle ──
+const W = 210, H = 310;
 
 // ── Renderer ──────────────────────────────────────────────
 const renderer = new THREE.WebGLRenderer({
@@ -35,10 +35,10 @@ renderer.setClearColor(0x000000, 0); // fully transparent
 
 // ── Scene & Camera ────────────────────────────────────────
 const scene  = new THREE.Scene();
-// Portrait aspect (W/H) so the full humanoid robot fills the tall frame
-const camera = new THREE.PerspectiveCamera(48, W / H, 0.01, 100);
-camera.position.set(0, 0.2, 3.2);
-camera.lookAt(0, 0.1, 0);
+// FOV 50, z=3.0 → frustum height 2.8 units; scale 2.4 fills 85% = ~264px robot
+const camera = new THREE.PerspectiveCamera(50, W / H, 0.01, 100);
+camera.position.set(0, 0, 3.0);
+camera.lookAt(0, 0, 0);
 
 // ── Lighting ──────────────────────────────────────────────
 // Soft ambient so no face is pitch black
@@ -92,8 +92,8 @@ loader.load(
     // Use the taller of height/width so the whole body fits the circle
     const maxDim = Math.max(size.x, size.y, size.z);
 
-    // Fill ~90% of the tall canvas so the robot towers over the circle
-    const scale = 2.8 / maxDim;
+    // Fill ~85% of canvas height → ~264px robot on 310px canvas
+    const scale = 2.4 / maxDim;
     model.scale.setScalar(scale);
 
     // Centre on origin
