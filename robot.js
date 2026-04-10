@@ -15,9 +15,8 @@ const hero    = document.getElementById('hero');
 
 if (!canvas || !hero) throw new Error('Robot: required DOM elements missing.');
 
-// ── Canvas: 240×280px. Robot fills 85% = ~240px tall.
-//    Feet inside circle ring, head+shoulders 80px above it. ──────────
-const W = 240, H = 280;
+// Canvas 200×250px: robot fills 75% = ~187px, head ~40px above circle
+const W = 200, H = 250;
 
 // ── Renderer ──────────────────────────────────────────────
 const renderer = new THREE.WebGLRenderer({
@@ -36,7 +35,6 @@ renderer.setClearColor(0x000000, 0); // fully transparent
 
 // ── Scene & Camera ────────────────────────────────────────
 const scene  = new THREE.Scene();
-// FOV 50, aspect 240/280=0.857, z=3.0 → frustum h=2.8 units; scale 2.4 = 85% fill
 const camera = new THREE.PerspectiveCamera(50, W / H, 0.01, 100);
 camera.position.set(0, 0, 3.0);
 camera.lookAt(0, 0, 0);
@@ -91,10 +89,9 @@ loader.load(
     const size0 = box0.getSize(new THREE.Vector3());
     console.log('[robot] raw size x/y/z:', size0.x.toFixed(2), size0.y.toFixed(2), size0.z.toFixed(2));
 
-    // Scale so the TALLEST visual axis fills 78% of the frustum (2.2 / 2.8 units)
-    // Use the largest of Y and Z — whichever is "up" in the model's coordinate space
+    // Robot fills 75% of frustum height → ~187px in 250px canvas
     const heightDim = Math.max(size0.y, size0.z);
-    const scale = 2.2 / heightDim;
+    const scale = 2.1 / heightDim;
     model.scale.setScalar(scale);
 
     // Re-measure AFTER scaling for accurate world-space centre

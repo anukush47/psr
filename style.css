@@ -868,7 +868,7 @@ button:hover~.cursor {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
+  z-index: 20;                /* robot sits above orbit rings & chips */
 }
 
 .av-pulse-ring {
@@ -911,17 +911,17 @@ button:hover~.cursor {
   will-change: transform;
 }
 
-/* Canvas: robot stands IN the circle ring, body/head rise above it */
+/* Canvas: feet at circle base, head overlaps ~40px above circle top */
 #robotCanvas {
   position: absolute;
-  width: 240px !important;
-  height: 280px !important;
+  width: 200px !important;
+  height: 250px !important;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 0;                  /* canvas bottom = circle bottom */
+  bottom: 0;
   display: block;
   pointer-events: none;
-  z-index: 5;
+  z-index: 20;                /* above orbit rings and chips */
 }
 
 /* Loading shimmer while model downloads */
