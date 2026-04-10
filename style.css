@@ -918,7 +918,7 @@ button:hover~.cursor {
   height: 360px !important;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 0;
+  bottom: -60px;
   display: block;
   pointer-events: none;
   z-index: 20;
