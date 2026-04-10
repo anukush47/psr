@@ -52,90 +52,61 @@
   --sb-track:    var(--bg);
 }
 
-/* ── LIGHT THEME ─────────────────────────────────────── */
-/* System preference */
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) {
-    --bg:      #f2f2fb;
-    --bg2:     #eaeaf7;
-    --bg3:     #e3e3f3;
-    --surface: rgba(255,255,255,0.75);
-    --surface2:rgba(255,255,255,0.55);
-    --accent:  #7c3aed;
-    --accent2: #a855f7;
-    --accent3: #7c3aed;
-    --pink:    #ec4899;
-    --cyan:    #0891b2;
-    --green:   #16a34a;
-    --text:    #16162a;
-    --text2:   #4b4b78;
-    --text3:   #8888b0;
-    --border:  rgba(124, 58, 237, 0.18);
-    --glow:    0 0 40px rgba(124, 58, 237, 0.12);
+/* ── LIGHT THEME values (shared between media-query and data-theme) ── */
+/* More saturated lavender backdrop so white-glass cards POP against it  */
+/* Hero section is always kept dark (forced below)                        */
+:root.--lt, [data-theme="light"],
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) {
+  --bg:       #ddd6fe;   /* vivid soft lavender */
+  --bg2:      #c4b5fd;   /* one step deeper */
+  --bg3:      #ede9fe;   /* very light for inner surfaces */
+  --surface:  rgba(255, 255, 255, 0.82);
+  --surface2: rgba(255, 255, 255, 0.60);
+  --accent:   #6d28d9;
+  --accent2:  #7c3aed;
+  --accent3:  #6d28d9;
+  --pink:     #db2777;
+  --cyan:     #0369a1;
+  --green:    #15803d;
+  --text:     #1e1b4b;   /* deep indigo-black */
+  --text2:    #3730a3;   /* medium indigo */
+  --text3:    #6d6b9e;   /* muted purple */
+  --border:   rgba(109, 40, 217, 0.22);
+  --glow:     0 0 40px rgba(109, 40, 217, 0.15);
 
-    --gl-bg:     rgba(255, 255, 255, 0.52);
-    --gl-border: rgba(255, 255, 255, 0.72);
-    --gl-shine:  rgba(255, 255, 255, 0.95);
-    --gl-depth:  rgba(100, 80, 200, 0.07);
-    --gl-drop:   rgba(100, 80, 200, 0.1);
-    --gl-glow:   rgba(124, 58, 237, 0.08);
-    --gl-grad:   linear-gradient(135deg,
-                   rgba(255,255,255,0.55) 0%,
-                   rgba(255,255,255,0.15) 65%,
-                   rgba(124,58,237,0.04) 100%);
-    --nav-bg:    rgba(255, 255, 255, 0.52);
-    --nav-glow:  rgba(124, 58, 237, 0.08);
-    --sec-bg:    var(--bg);
-    --sec-bg2:   var(--bg2);
-    --loader-bg: var(--bg);
-    --sb-track:  var(--bg2);
-  }
-}
-/* Manual override — always light */
-[data-theme="light"] {
-  --bg:      #f2f2fb;
-  --bg2:     #eaeaf7;
-  --bg3:     #e3e3f3;
-  --surface: rgba(255,255,255,0.75);
-  --surface2:rgba(255,255,255,0.55);
-  --accent:  #7c3aed;
-  --accent2: #a855f7;
-  --accent3: #7c3aed;
-  --pink:    #ec4899;
-  --cyan:    #0891b2;
-  --green:   #16a34a;
-  --text:    #16162a;
-  --text2:   #4b4b78;
-  --text3:   #8888b0;
-  --border:  rgba(124, 58, 237, 0.18);
-  --glow:    0 0 40px rgba(124, 58, 237, 0.12);
-
-  --gl-bg:     rgba(255, 255, 255, 0.52);
-  --gl-border: rgba(255, 255, 255, 0.72);
-  --gl-shine:  rgba(255, 255, 255, 0.95);
-  --gl-depth:  rgba(100, 80, 200, 0.07);
-  --gl-drop:   rgba(100, 80, 200, 0.1);
-  --gl-glow:   rgba(124, 58, 237, 0.08);
+  /* Glass — crisp white panels against the saturated bg */
+  --gl-bg:     rgba(255, 255, 255, 0.62);
+  --gl-border: rgba(255, 255, 255, 0.85);
+  --gl-shine:  rgba(255, 255, 255, 1);
+  --gl-depth:  rgba(109, 40, 217, 0.06);
+  --gl-drop:   rgba(80, 30, 160, 0.14);
+  --gl-glow:   rgba(109, 40, 217, 0.1);
+  --gl-blur:   blur(22px) saturate(220%);
   --gl-grad:   linear-gradient(135deg,
-                 rgba(255,255,255,0.55) 0%,
-                 rgba(255,255,255,0.15) 65%,
-                 rgba(124,58,237,0.04) 100%);
-  --nav-bg:    rgba(255, 255, 255, 0.52);
-  --nav-glow:  rgba(124, 58, 237, 0.08);
+                 rgba(255,255,255,0.7)  0%,
+                 rgba(255,255,255,0.25) 55%,
+                 rgba(124,58,237,0.04)  100%);
+
+  --nav-bg:    rgba(255, 255, 255, 0.60);
+  --nav-glow:  rgba(109, 40, 217, 0.1);
   --sec-bg:    var(--bg);
   --sec-bg2:   var(--bg2);
-  --loader-bg: var(--bg);
+  --loader-bg: #1e1b4b;   /* loader always dark for drama */
   --sb-track:  var(--bg2);
-}
+} }
+
 /* Manual override — always dark */
 [data-theme="dark"] {
-  --bg:      #0a0a0f; --bg2: #0f0f18; --bg3: #13131f;
+  --bg: #0a0a0f; --bg2: #0f0f18; --bg3: #13131f;
   --surface: #1a1a2e; --surface2: #1e1e32;
+  --accent: #7c3aed; --accent2: #a855f7; --accent3: #c084fc;
+  --pink: #ec4899; --cyan: #06b6d4; --green: #22c55e;
   --text: #e2e8f0; --text2: #94a3b8; --text3: #64748b;
   --border: rgba(124,58,237,0.2); --glow: 0 0 40px rgba(124,58,237,0.3);
   --gl-bg: rgba(10,8,22,0.52); --gl-border: rgba(255,255,255,0.08);
   --gl-shine: rgba(255,255,255,0.13); --gl-depth: rgba(0,0,0,0.28);
   --gl-drop: rgba(0,0,0,0.45); --gl-glow: rgba(124,58,237,0.14);
+  --gl-blur: blur(20px) saturate(180%);
   --gl-grad: linear-gradient(135deg,rgba(255,255,255,0.07) 0%,rgba(255,255,255,0.01) 65%,rgba(124,58,237,0.05) 100%);
   --nav-bg: rgba(8,8,14,0.48); --nav-glow: rgba(124,58,237,0.14);
   --sec-bg: var(--bg); --sec-bg2: var(--bg2);
@@ -2317,22 +2288,15 @@ button:hover~.cursor {
   color: var(--text);
 }
 
-/* ── LIGHT THEME: particle canvas tint ─────────────────── */
-/* Handled in JS via particleColorLight variable */
-
 /* ── RESPONSIVE: ensure glass still renders on mobile ───── */
 @media (max-width: 900px) {
-  /* Reduce blur on low-end mobile for perf */
   .skill-card, .project-card, .research-card,
   .edu-card, .exp-body, .contact-item, .contact-form, .about-img-card {
     backdrop-filter: blur(12px) saturate(160%);
     -webkit-backdrop-filter: blur(12px) saturate(160%);
   }
-  .nav-toggle-wrap {
-    gap: 0.5rem;
-  }
+  .nav-toggle-wrap { gap: 0.5rem; }
 }
-
 @media (max-width: 500px) {
   .skill-card, .project-card, .research-card,
   .edu-card, .exp-body, .contact-item, .contact-form, .about-img-card {
@@ -2340,3 +2304,160 @@ button:hover~.cursor {
     -webkit-backdrop-filter: blur(8px);
   }
 }
+
+/* ================================================================
+   HERO — ALWAYS DARK (regardless of theme)
+   The hero is an immersive dark canvas — locking it keeps it sharp
+   in both light and dark mode.
+   ================================================================ */
+.hero {
+  background: #0a0a0f !important;
+}
+/* Ensure hero text is always readable on dark */
+.hero .hero-desc  { color: #94a3b8 !important; }
+.hero .hero-scroll { color: #64748b !important; }
+[data-theme="light"] .hero .hero-title,
+[data-theme="light"] .hero-title { color: #e2e8f0; }
+[data-theme="light"] .hero .hero-name { /* gradient text stays vivid */ }
+
+/* ================================================================
+   CURSOR-TRACKING LIQUID GLASS SPOTLIGHT
+   --mx / --my are set per-element in JS on mousemove.
+   Each interactive tile has a radial spotlight that follows the cursor.
+   Buttons get a bright white lens. Cards get a purple/brand lens.
+   ================================================================ */
+
+/* Default off-element position so glow is invisible until hover */
+.btn,
+.skill-card, .project-card, .research-card,
+.edu-card, .exp-body, .contact-item,
+.contact-form, .about-img-card {
+  --mx: -300px;
+  --my: -300px;
+}
+
+/* ── Button spotlight (white lens, bright) ── */
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    90px circle at var(--mx) var(--my),
+    rgba(255, 255, 255, 0.28),
+    transparent 75%
+  );
+  pointer-events: none;
+  z-index: 2;  /* sits above the gloss ::after */
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.btn:hover::before { opacity: 1; }
+
+/* Primary button: warmer lens */
+.btn-primary::before {
+  background: radial-gradient(
+    90px circle at var(--mx) var(--my),
+    rgba(255, 255, 255, 0.35),
+    transparent 75%
+  );
+}
+
+/* ── Card & tile spotlight (brand-purple lens) ── */
+/* project-card, research-card, exp-body, contact-item, contact-form, about-img-card */
+/* These don't use ::before for anything else, so it's free */
+.project-card::before,
+.research-card::before,
+.exp-body::before,
+.contact-item::before,
+.contact-form::before,
+.about-img-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    260px circle at var(--mx) var(--my),
+    rgba(168, 85, 247, 0.13),
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.2s ease;
+  opacity: 0;
+}
+.project-card:hover::before,
+.research-card:hover::before,
+.exp-body:hover::before,
+.contact-item:hover::before,
+.contact-form:hover::before,
+.about-img-card:hover::before { opacity: 1; }
+
+/* skill-card::before = top accent line → use ::after for spotlight */
+/* edu-card::before   = top accent line → use ::after for spotlight */
+.skill-card::after,
+.edu-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    220px circle at var(--mx) var(--my),
+    rgba(168, 85, 247, 0.13),
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.skill-card:hover::after,
+.edu-card:hover::after { opacity: 1; }
+
+/* Light mode: softer pink/indigo lens instead of purple */
+[data-theme="light"] .project-card::before,
+[data-theme="light"] .research-card::before,
+[data-theme="light"] .exp-body::before,
+[data-theme="light"] .contact-item::before,
+[data-theme="light"] .contact-form::before,
+[data-theme="light"] .about-img-card::before,
+[data-theme="light"] .skill-card::after,
+[data-theme="light"] .edu-card::after {
+  background: radial-gradient(
+    260px circle at var(--mx) var(--my),
+    rgba(109, 40, 217, 0.1),
+    transparent 70%
+  );
+}
+[data-theme="light"] .btn::before {
+  background: radial-gradient(
+    90px circle at var(--mx) var(--my),
+    rgba(255, 255, 255, 0.5),
+    transparent 75%
+  );
+}
+
+/* ── Light mode: section label + accent3 text fix ── */
+[data-theme="light"] .section-label,
+[data-theme="light"] .edu-badge,
+[data-theme="light"] .research-badge { color: var(--accent2); }
+[data-theme="light"] .edu-inst        { color: var(--accent2); }
+[data-theme="light"] .exp-company     { color: var(--accent2); }
+[data-theme="light"] .exp-duration    { color: var(--cyan); border-color: rgba(3,105,161,0.3); background: rgba(3,105,161,0.08); }
+[data-theme="light"] .tag,
+[data-theme="light"] .project-tags span,
+[data-theme="light"] .edu-tags span,
+[data-theme="light"] .exp-tags span   { color: var(--accent2); border-color: rgba(109,40,217,0.25); background: rgba(109,40,217,0.08); }
+[data-theme="light"] .skill-icon      { background: linear-gradient(135deg, var(--accent), var(--pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+[data-theme="light"] .hero-tag        { background: rgba(21,128,61,0.1); border-color: rgba(21,128,61,0.3); box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 12px rgba(21,128,61,0.1); }
+[data-theme="light"] .stat-num        { background: linear-gradient(135deg, var(--accent), var(--pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+[data-theme="light"] .stat span       { color: var(--accent2); }
+[data-theme="light"] .stat p          { color: var(--text3); }
+/* Light loader always has dark look */
+[data-theme="light"] .loader          { background: #1e1b4b; }
+[data-theme="light"] .loader-sub      { color: rgba(255,255,255,0.4); }
+/* Nav link active pill in light */
+[data-theme="light"] .nav-link        { color: rgba(30,27,75,0.7); }
+[data-theme="light"] .nav-link:hover  { color: var(--accent2); }
+[data-theme="light"] .nav-link.active { color: var(--accent); background: rgba(109,40,217,0.1); }
+[data-theme="light"] .nav-logo        { background: linear-gradient(135deg, var(--accent), var(--pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }

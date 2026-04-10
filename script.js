@@ -289,6 +289,28 @@ document.getElementById('contactForm').addEventListener('submit', e => {
   }, 3000);
 });
 
+// ==================== CURSOR-TRACKING GLASS SPOTLIGHT ====================
+// Updates --mx / --my on each glass tile so the CSS radial-gradient
+// spotlight follows the cursor in real-time.
+const glassTargets = document.querySelectorAll(
+  '.btn, .skill-card, .project-card, .research-card, ' +
+  '.edu-card, .exp-body, .contact-item, .contact-form, .about-img-card'
+);
+
+glassTargets.forEach(el => {
+  el.addEventListener('mousemove', e => {
+    const r = el.getBoundingClientRect();
+    el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+    el.style.setProperty('--my', `${e.clientY - r.top}px`);
+  }, { passive: true });
+
+  el.addEventListener('mouseleave', () => {
+    // Move far off-element so glow disappears smoothly
+    el.style.setProperty('--mx', '-300px');
+    el.style.setProperty('--my', '-300px');
+  });
+});
+
 // ==================== SMOOTH ACTIVE NAV ====================
 const sections = document.querySelectorAll('section[id]');
 window.addEventListener('scroll', () => {
