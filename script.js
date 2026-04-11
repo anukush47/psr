@@ -365,9 +365,14 @@ if (isMobile) {
     const dist = Math.sqrt(dx * dx + dy * dy);
     touchSparkThrottle += dist;
 
-    if (touchSparkThrottle > 10) {
+    if (touchSparkThrottle > 5) {
+      // Spawn 2 sparks at slightly varied positions for density
       spawnSpark(tx, ty);
-      if (touchSparkThrottle > 24) spawnSpark(tx, ty); // burst on fast swipe
+      spawnSpark(tx + (Math.random() - 0.5) * 8, ty + (Math.random() - 0.5) * 8);
+      if (touchSparkThrottle > 14) {
+        // Extra burst on fast swipe
+        spawnSpark(tx + (Math.random() - 0.5) * 12, ty + (Math.random() - 0.5) * 12);
+      }
       touchSparkThrottle = 0;
       lastTouchSparkX = tx; lastTouchSparkY = ty;
     }
