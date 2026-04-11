@@ -37,7 +37,7 @@ renderer.setClearColor(0x000000, 0); // fully transparent
 const scene  = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(50, W / H, 0.01, 100);
 camera.position.set(0, 0, 3.0);
-camera.lookAt(0, 0, 0);
+camera.lookAt(0, 0.2, 0);  // look slightly above centre to frame head-to-toe
 
 // ── Lighting ──────────────────────────────────────────────
 // Soft ambient so no face is pitch black
@@ -89,13 +89,14 @@ loader.load(
     const size0 = box0.getSize(new THREE.Vector3());
     console.log('[robot] raw size x/y/z:', size0.x.toFixed(2), size0.y.toFixed(2), size0.z.toFixed(2));
 
-    // Fill 78% of canvas height → full portrait with breathing room top & bottom
+    // Scale so robot fills 70% of canvas — enough room for full body
     const heightDim = Math.max(size0.y, size0.z);
-    const scale = 2.2 / heightDim;
+    const scale = 2.0 / heightDim;
     model.scale.setScalar(scale);
 
-    // Re-measure AFTER scaling for accurate world-space centre
+    // Re-measure AFTER scaling — force matrix update so bbox is accurate
     scene.add(model);
+    model.updateMatrixWorld(true);
     const box1   = new THREE.Box3().setFromObject(model);
     const centre = box1.getCenter(new THREE.Vector3());
     model.position.sub(centre);  // bbox centre → world origin
