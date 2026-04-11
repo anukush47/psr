@@ -1685,87 +1685,140 @@ button:hover~.cursor {
 }
 
 /* ==================== RESPONSIVE ==================== */
+/* =====================================================
+   MOBILE — 900px and below
+   ===================================================== */
 @media (max-width: 900px) {
+
+  /* ── Hide desktop cursor & sparkles — touch devices don't need them ── */
+  .cursor, .cursor-follower, .spark { display: none !important; }
+  * { cursor: auto !important; }
+
+  /* ── Hero ── */
   .hero {
     grid-template-columns: 1fr;
     text-align: center;
     padding: 5.5rem 1.5rem 4rem;
+    min-height: 100svh;
   }
 
-  .hero-visual,
-  .orbit-system {
-    display: none;
-  }
+  .hero-visual, .orbit-system, #robotCanvas { display: none !important; }
 
-  .hero-cta,
-  .hero-tag {
-    justify-content: center;
-  }
+  .hero-cta, .hero-tag { justify-content: center; }
+  .hero-scroll         { justify-content: center; }
 
-  .hero-scroll {
-    justify-content: center;
-  }
+  .hero h1  { font-size: clamp(2rem, 8vw, 3rem); }
+  .hero-desc { font-size: 1rem; }
 
-  .about-grid,
-  .contact-grid {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-
+  /* ── Nav ── */
   .nav {
     top: 12px;
     width: calc(100% - 2rem);
     padding: 0.55rem 0.65rem 0.55rem 1.1rem;
+    /* lighter blur on mobile */
+    backdrop-filter: blur(10px) saturate(140%);
   }
+  .nav-links, .nav-cta { display: none; }
+  .hamburger           { display: flex; }
 
-  .nav-links,
-  .nav-cta {
-    display: none;
-  }
+  /* ── Layouts ── */
+  .container { padding: 0 1.2rem; }
 
-  .hamburger {
-    display: flex;
-  }
-
-  .container {
-    padding: 0 1.5rem;
-  }
+  .about-grid,
+  .contact-grid          { grid-template-columns: 1fr; gap: 2rem; }
 
   .projects-grid,
-  .research-grid {
-    grid-template-columns: 1fr;
+  .research-grid         { grid-template-columns: 1fr; }
+
+  .research-card.featured { grid-column: 1; }
+
+  .edu-timeline          { grid-template-columns: 1fr; }
+
+  .skills-grid           { grid-template-columns: repeat(2, 1fr); }
+
+  .exp-timeline          { padding-left: 1.5rem; }
+  .exp-header            { flex-direction: column; gap: 0.5rem; }
+
+  /* ── Glass — lighter on mobile (GPU relief) ── */
+  .btn, .skill-card, .project-card, .research-card,
+  .edu-card, .exp-body, .contact-item, .contact-form,
+  .about-img-card, .nav {
+    backdrop-filter: blur(8px) saturate(130%) !important;
   }
 
-  .research-card.featured {
-    grid-column: 1;
+  /* ── Kill heavy background animations that eat battery ── */
+  .ambient-glow               { animation: none !important; }
+  .or-1, .or-2, .or-3         { animation: none !important; }
+  .orb-bead, .ob-purple,
+  .ob-pink, .ob-cyan          { animation: none !important; }
+  .av-pulse-ring              { animation: none !important; }
+  .av-face                    { animation: none !important; }
+  .chip-orbit, .chip-orbit .tech-chip { animation: none !important; }
+
+  /* ── Particle canvas — JS will reduce particles, but also dim it ── */
+  #particleCanvas             { opacity: 0.4; }
+
+  /* ── Sections — tighter spacing ── */
+  .section { padding: 4rem 0; }
+  .section-title { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+
+  /* ── Typewriter — no layout shift ── */
+  .tw-line { min-height: 1.4em; }
+
+  /* ── Mobile menu — lighter blur ── */
+  .mobile-menu {
+    backdrop-filter: blur(20px) saturate(160%);
   }
 
-  .edu-timeline {
-    grid-template-columns: 1fr;
-  }
+  /* ── Cards — remove hover glow pseudo-elements (not hoverable on touch) ── */
+  .project-card::before,
+  .skill-card::after,
+  .edu-card::after,
+  .exp-body::before,
+  .contact-item::before,
+  .contact-form::before,
+  .about-img-card::before { opacity: 0 !important; }
 
-  .exp-timeline {
-    padding-left: 1.5rem;
-  }
-
-  .exp-header {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .skills-grid {
-    grid-template-columns: repeat(2, 1fr);
+  /* ── Reveal animations — instant on mobile (no lag) ── */
+  .reveal-up, .reveal-left, .reveal-right {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
 
+/* =====================================================
+   SMALL PHONES — 500px and below
+   ===================================================== */
 @media (max-width: 500px) {
-  .skills-grid {
-    grid-template-columns: 1fr;
+  .skills-grid  { grid-template-columns: 1fr; }
+  .about-stats  { flex-direction: column; gap: 2rem; }
+
+  .hero h1      { font-size: clamp(1.8rem, 9vw, 2.4rem); }
+  .hero-desc    { font-size: 0.95rem; }
+  .section      { padding: 3rem 0; }
+  .container    { padding: 0 1rem; }
+
+  /* Minimal blur — very weak GPUs */
+  .btn, .skill-card, .project-card, .research-card,
+  .edu-card, .exp-body, .contact-item, .contact-form,
+  .about-img-card, .nav {
+    backdrop-filter: blur(4px) !important;
   }
 
-  .about-stats {
-    flex-direction: column;
-    gap: 2rem;
+  .nav {
+    backdrop-filter: blur(6px) !important;
+  }
+}
+
+/* =====================================================
+   REDUCED MOTION — accessibility + low-end devices
+   ===================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 

@@ -58,15 +58,17 @@ document.addEventListener('mousemove', e => {
   }
   cursor.style.transform = `translate3d(${mx - 4}px, ${my - 4}px, 0)`;
 
-  // Spawn sparkles — throttled by distance so fast moves get more sparks
-  const dx = mx - lastSparkX, dy = my - lastSparkY;
-  const dist = Math.sqrt(dx * dx + dy * dy);
-  sparkThrottle += dist;
-  if (sparkThrottle > 12) {
-    spawnSpark(mx, my);
-    if (sparkThrottle > 28) spawnSpark(mx, my); // extra spark on fast moves
-    sparkThrottle = 0;
-    lastSparkX = mx; lastSparkY = my;
+  // Spawn sparkles — throttled by distance so fast moves get more sparks (desktop only)
+  if (!isMobile) {
+    const dx = mx - lastSparkX, dy = my - lastSparkY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    sparkThrottle += dist;
+    if (sparkThrottle > 12) {
+      spawnSpark(mx, my);
+      if (sparkThrottle > 28) spawnSpark(mx, my); // extra spark on fast moves
+      sparkThrottle = 0;
+      lastSparkX = mx; lastSparkY = my;
+    }
   }
 }, { passive: true });
 
@@ -160,6 +162,9 @@ function typeWrite() {
 }
 setTimeout(typeWrite, 2500);
 
+// ==================== MOBILE DETECTION ====================
+const isMobile = window.matchMedia('(max-width: 900px)').matches || 'ontouchstart' in window;
+
 // ==================== PARTICLE CANVAS ====================
 const canvas = document.getElementById('particleCanvas');
 const ctx = canvas.getContext('2d', { alpha: true });
@@ -207,8 +212,9 @@ class Particle {
   }
 }
 
-// 45 particles — enough for visual density, light on the GPU
-for (let i = 0; i < 45; i++) particles.push(new Particle());
+// Fewer particles on mobile to save GPU
+const PARTICLE_COUNT = isMobile ? 15 : 45;
+for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
 
 const CONNECT_DIST = 95; // shorter = fewer line draws per frame
 
@@ -240,7 +246,11 @@ function animateParticles() {
   ctx.globalAlpha = 1;
   rafId = requestAnimationFrame(animateParticles);
 }
-rafId = requestAnimationFrame(animateParticles);
+if (!isMobile) {
+  rafId = requestAnimationFrame(animateParticles);
+} else {
+  canvas.style.display = 'none';
+}
 
 // ==================== SCROLL REVEAL ====================
 const revealObserver = new IntersectionObserver((entries) => {
