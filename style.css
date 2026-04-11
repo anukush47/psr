@@ -911,18 +911,17 @@ button:hover~.cursor {
   will-change: transform;
 }
 
-/* Robot canvas — direct child of orbit-system, topmost layer */
+/* Robot canvas — topmost layer, centered in orbit-system, full portrait */
 #robotCanvas {
   position: absolute;
-  width: 220px !important;
-  height: 360px !important;
+  width: 260px !important;
+  height: 420px !important;
   left: 50%;
-  transform: translateX(-50%);
-  /* orbit-system=460px tall, circle-bottom=320px from top=140px from bottom, minus 120px offset = 20px */
-  bottom: 20px;
+  top: 50%;
+  transform: translate(-50%, -50%);  /* perfectly centred in orbit-system */
   display: block;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 9999;                      /* above rings, chips, beads — everything */
 }
 
 /* Loading shimmer while model downloads */

@@ -15,8 +15,8 @@ const hero    = document.getElementById('hero');
 
 if (!canvas || !hero) throw new Error('Robot: required DOM elements missing.');
 
-// Canvas 220×360px: full body visible, feet at circle, head above ring
-const W = 220, H = 360;
+// Full portrait canvas — head to foot, centred on orbit-system
+const W = 260, H = 420;
 
 // ── Renderer ──────────────────────────────────────────────
 const renderer = new THREE.WebGLRenderer({
@@ -89,9 +89,9 @@ loader.load(
     const size0 = box0.getSize(new THREE.Vector3());
     console.log('[robot] raw size x/y/z:', size0.x.toFixed(2), size0.y.toFixed(2), size0.z.toFixed(2));
 
-    // Scale to fill 80% of canvas height → full body fits with breathing room
+    // Fill 78% of canvas height → full portrait with breathing room top & bottom
     const heightDim = Math.max(size0.y, size0.z);
-    const scale = 1.8 / heightDim;
+    const scale = 2.2 / heightDim;
     model.scale.setScalar(scale);
 
     // Re-measure AFTER scaling for accurate world-space centre
