@@ -1790,13 +1790,8 @@ button:hover~.cursor {
   #particleCanvas { opacity: 0; pointer-events: none; }
 
   /* ── Card hover spotlights — suppress (not hoverable on touch) ── */
-  .project-card::before,
-  .skill-card::after,
-  .edu-card::after,
-  .exp-body::before,
-  .contact-item::before,
-  .contact-form::before,
-  .about-img-card::before { opacity: 0 !important; }
+  /* Spotlights: hover never fires on touch, so they stay at opacity:0 naturally.
+     ::after is freed up for tap-ripple animations below. */
 
   /* ── Reveal animations — instant (no scroll lag) ── */
   .reveal-up, .reveal-left, .reveal-right {
@@ -2811,6 +2806,18 @@ button:hover~.cursor {
   opacity: 1;
 }
 
+/* ── Tap-ripple keyframe ── */
+@keyframes mobileRipple {
+  0%   { opacity: 0.75; transform: scale(0.25); }
+  65%  { opacity: 0.35; transform: scale(1.15); }
+  100% { opacity: 0;    transform: scale(1.55); }
+}
+
+/* ── Carousel pill-dots keyframe ── */
+@keyframes dotExpand {
+  to { width: 18px; border-radius: 3px; background: var(--accent2); }
+}
+
 /* ================================================================
    MOBILE LAYOUT OVERRIDE — must be LAST in file so it wins over
    all base-style grid definitions (edu-timeline, research-grid, etc.
@@ -2826,14 +2833,9 @@ button:hover~.cursor {
 
   /* ── GRIDS — force single column (overrides all minmax base styles) ── */
   .edu-timeline   { grid-template-columns: 1fr !important; gap: 1.2rem !important; }
-  .research-grid  { grid-template-columns: 1fr !important; gap: 1.2rem !important; }
-  .projects-grid  { grid-template-columns: 1fr !important; gap: 1.2rem !important; }
   .about-grid     { grid-template-columns: 1fr !important; gap: 2rem !important; }
   .contact-grid   { grid-template-columns: 1fr !important; gap: 2rem !important; }
   .skills-grid    { grid-template-columns: repeat(2, 1fr) !important; gap: 1rem !important; }
-
-  /* ── Featured research card — one column means no spanning needed ── */
-  .research-card.featured { grid-column: 1 !important; }
 
   /* ── Experience timeline ── */
   .exp-timeline   { padding-left: 1.5rem !important; }
@@ -2858,14 +2860,151 @@ button:hover~.cursor {
   }
 
   /* ── Ensure flex children don't blow out ── */
-  .hero-cta   { flex-wrap: wrap !important; justify-content: center !important; }
-  .about-tags { justify-content: center !important; }
+  .hero-cta    { flex-wrap: wrap !important; justify-content: center !important; }
+  .about-tags  { justify-content: center !important; }
   .about-stats { flex-wrap: wrap !important; }
   .contact-info { width: 100% !important; }
   .contact-form { width: 100% !important; }
+
+  /* ================================================================
+     HORIZONTAL SWIPE CAROUSEL — projects & research cards
+     Break out of .container padding with negative margin so cards
+     go edge-to-edge, with 1.2rem left inset on first card.
+     ================================================================ */
+  .projects-grid,
+  .research-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    grid-template-columns: unset !important;
+    gap: 0 !important;
+    overflow-x: scroll !important;
+    overflow-y: visible !important;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    /* Break out of container gutters → full-bleed scroll track */
+    margin-left: -1.2rem !important;
+    margin-right: -1.2rem !important;
+    padding: 0.4rem 1.2rem 0.5rem !important;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .projects-grid::-webkit-scrollbar,
+  .research-grid::-webkit-scrollbar { display: none; }
+
+  .project-card,
+  .research-card {
+    flex: 0 0 82vw !important;
+    width: 82vw !important;
+    max-width: 320px !important;
+    min-width: 0 !important;
+    scroll-snap-align: start;
+    margin-right: 0.9rem;
+  }
+  .project-card:last-child,
+  .research-card:last-child { margin-right: 0; }
+
+  /* Featured research card — same width as others in carousel */
+  .research-card.featured {
+    grid-column: unset !important;
+    flex: 0 0 82vw !important;
+    width: 82vw !important;
+    max-width: 320px !important;
+  }
+
+  /* Carousel dot-track injected by JS */
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 0.6rem 0 0.2rem;
+  }
+  .c-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text3);
+    transition: width 0.25s ease, border-radius 0.25s ease, background 0.25s ease;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .c-dot.active {
+    width: 18px;
+    border-radius: 3px;
+    background: var(--accent2);
+  }
+
+  /* ================================================================
+     TAP RIPPLE — CSS-only :active animation, touch-native feel
+     ================================================================ */
+
+  /* Remove native blue tap flash */
+  .project-card, .research-card, .skill-card,
+  .edu-card, .exp-body, .contact-item {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Cards whose ::after is free (::before handles spotlight) */
+  .project-card::after,
+  .research-card::after,
+  .exp-body::after,
+  .contact-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at 50% 50%,
+      rgba(168, 85, 247, 0.4)  0%,
+      rgba(236, 72, 153, 0.18) 38%,
+      transparent 65%);
+    opacity: 0;
+    transform: scale(0.25);
+    pointer-events: none;
+    z-index: 8;
+  }
+  .project-card:active::after,
+  .research-card:active::after,
+  .exp-body:active::after,
+  .contact-item:active::after {
+    animation: mobileRipple 0.45s cubic-bezier(0.2, 0.8, 0.4, 1) forwards;
+  }
+
+  /* exp-body and contact-item need overflow:hidden to clip the scale */
+  .exp-body, .contact-item { overflow: hidden; }
+
+  /* Skill & edu cards: ::after is the spotlight pseudo-el, repurpose it.
+     Use !important so it wins over the opacity:0 base + specificity fight. */
+  .skill-card:active::after,
+  .edu-card:active::after {
+    background: radial-gradient(circle at 50% 50%,
+      rgba(168, 85, 247, 0.4)  0%,
+      rgba(236, 72, 153, 0.18) 38%,
+      transparent 65%) !important;
+    animation: mobileRipple 0.45s cubic-bezier(0.2, 0.8, 0.4, 1) forwards !important;
+    opacity: 0.75 !important;
+    transform: scale(0.25) !important;
+  }
+
+  /* Subtle card-press scale for tactile feel */
+  .project-card:active,
+  .research-card:active,
+  .skill-card:active,
+  .edu-card:active,
+  .exp-body:active,
+  .contact-item:active {
+    transform: scale(0.985);
+    transition: transform 0.1s ease;
+  }
 }
 
 @media (max-width: 500px) {
   .skills-grid { grid-template-columns: 1fr !important; }
   .hero-cta .btn { width: 100%; justify-content: center; }
+  .project-card,
+  .research-card {
+    flex: 0 0 88vw !important;
+    width: 88vw !important;
+  }
 }

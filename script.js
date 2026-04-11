@@ -352,6 +352,47 @@ glassTargets.forEach(el => {
   });
 });
 
+// ==================== MOBILE CAROUSEL DOTS ====================
+function setupCarousel(grid) {
+  const cards = Array.from(grid.children);
+  if (cards.length <= 1) return;
+
+  // Build dot row
+  const dotsWrap = document.createElement('div');
+  dotsWrap.className = 'carousel-dots';
+  const dots = cards.map((_, i) => {
+    const d = document.createElement('span');
+    d.className = 'c-dot' + (i === 0 ? ' active' : '');
+    dotsWrap.appendChild(d);
+    return d;
+  });
+  grid.insertAdjacentElement('afterend', dotsWrap);
+
+  // Update active dot as user scrolls
+  function updateDots() {
+    const cardW = grid.scrollWidth / cards.length;
+    const idx   = Math.min(
+      cards.length - 1,
+      Math.round(grid.scrollLeft / cardW)
+    );
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+
+  grid.addEventListener('scroll', updateDots, { passive: true });
+
+  // Tap a dot → scroll to that card
+  dots.forEach((d, i) => {
+    d.addEventListener('click', () => {
+      const cardW = grid.scrollWidth / cards.length;
+      grid.scrollTo({ left: i * cardW, behavior: 'smooth' });
+    });
+  });
+}
+
+if (isMobile) {
+  document.querySelectorAll('.projects-grid, .research-grid').forEach(setupCarousel);
+}
+
 // ==================== SMOOTH ACTIVE NAV ====================
 const sections = document.querySelectorAll('section[id]');
 window.addEventListener('scroll', () => {
