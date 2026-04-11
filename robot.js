@@ -15,8 +15,8 @@ const hero    = document.getElementById('hero');
 
 if (!canvas || !hero) throw new Error('Robot: required DOM elements missing.');
 
-// Full portrait canvas — head to foot, centred on orbit-system
-const W = 260, H = 420;
+// Large canvas fills most of orbit-system — no clipping possible
+const W = 400, H = 440;
 
 // ── Renderer ──────────────────────────────────────────────
 const renderer = new THREE.WebGLRenderer({
@@ -35,9 +35,9 @@ renderer.setClearColor(0x000000, 0); // fully transparent
 
 // ── Scene & Camera ────────────────────────────────────────
 const scene  = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(50, W / H, 0.01, 100);
-camera.position.set(0, 0, 3.0);
-camera.lookAt(0, 0.2, 0);  // look slightly above centre to frame head-to-toe
+const camera = new THREE.PerspectiveCamera(45, W / H, 0.01, 100);
+camera.position.set(0, 0, 3.5);
+camera.lookAt(0, 0, 0);
 
 // ── Lighting ──────────────────────────────────────────────
 // Soft ambient so no face is pitch black
@@ -84,22 +84,22 @@ loader.load(
   (gltf) => {
     model = gltf.scene;
 
-    // ── Auto-fit: measure all 3 axes, log them so we can see orientation ──
-    const box0  = new THREE.Box3().setFromObject(model);
-    const size0 = box0.getSize(new THREE.Vector3());
-    console.log('[robot] raw size x/y/z:', size0.x.toFixed(2), size0.y.toFixed(2), size0.z.toFixed(2));
-
-    // Scale so robot fills 70% of canvas — enough room for full body
-    const heightDim = Math.max(size0.y, size0.z);
-    const scale = 2.0 / heightDim;
-    model.scale.setScalar(scale);
-
-    // Re-measure AFTER scaling — force matrix update so bbox is accurate
+    // Add to scene first so the full hierarchy gets proper world matrices
     scene.add(model);
     model.updateMatrixWorld(true);
-    const box1   = new THREE.Box3().setFromObject(model);
-    const centre = box1.getCenter(new THREE.Vector3());
-    model.position.sub(centre);  // bbox centre → world origin
+
+    // Measure true world-space bounding box
+    const box0 = new THREE.Box3().setFromObject(model);
+    const size0 = box0.getSize(new THREE.Vector3());
+    const ctr0  = box0.getCenter(new THREE.Vector3());
+    console.log('[robot] size:', size0.x.toFixed(2), size0.y.toFixed(2), size0.z.toFixed(2));
+
+    // Scale so the tallest axis fills 70% of the camera frustum (1.96 / 2.8)
+    const tallest = Math.max(size0.x, size0.y, size0.z);
+    const scale   = 1.96 / tallest;
+    model.scale.setScalar(scale);
+    model.position.set(-ctr0.x * scale, -ctr0.y * scale, -ctr0.z * scale);
+    model.updateMatrixWorld(true);
 
     // ── Material tweaks — tinted to match theme ──
     model.traverse((child) => {
