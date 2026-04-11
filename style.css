@@ -1690,8 +1690,8 @@ button:hover~.cursor {
    ===================================================== */
 @media (max-width: 900px) {
 
-  /* ── Hide desktop cursor & sparkles — touch devices ── */
-  .cursor, .cursor-follower, .spark { display: none !important; }
+  /* ── Hide desktop cursor ring — keep .spark visible for touch trails ── */
+  .cursor, .cursor-follower { display: none !important; }
   *, body { cursor: auto !important; }
 
   /* ── Loader — wrap letters so they don't overflow ── */

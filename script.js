@@ -70,6 +70,7 @@ document.addEventListener('mousemove', e => {
       lastSparkX = mx; lastSparkY = my;
     }
   }
+
 }, { passive: true });
 
 // Silky lerp follower
@@ -351,6 +352,27 @@ glassTargets.forEach(el => {
     el.style.setProperty('--my', '-300px');
   });
 });
+
+// ==================== TOUCH SPARKLE TRAIL (mobile) ====================
+if (isMobile) {
+  let lastTouchSparkX = 0, lastTouchSparkY = 0, touchSparkThrottle = 0;
+
+  document.addEventListener('touchmove', e => {
+    const touch = e.touches[0];
+    const tx = touch.clientX, ty = touch.clientY;
+
+    const dx = tx - lastTouchSparkX, dy = ty - lastTouchSparkY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    touchSparkThrottle += dist;
+
+    if (touchSparkThrottle > 10) {
+      spawnSpark(tx, ty);
+      if (touchSparkThrottle > 24) spawnSpark(tx, ty); // burst on fast swipe
+      touchSparkThrottle = 0;
+      lastTouchSparkX = tx; lastTouchSparkY = ty;
+    }
+  }, { passive: true });
+}
 
 // ==================== MOBILE CAROUSEL DOTS ====================
 function setupCarousel(grid) {
