@@ -22,6 +22,32 @@ const follower = document.getElementById('cursorFollower');
 let mx = 0, my = 0, fx = 0, fy = 0;
 let cursorVisible = false;
 
+// ── Fairy comet sparkle tail ──────────────────────────────
+const SPARK_COLORS = ['#a855f7','#c084fc','#ec4899','#f472b6','#06b6d4','#ffffff'];
+let lastSparkX = 0, lastSparkY = 0, sparkThrottle = 0;
+
+function spawnSpark(x, y) {
+  const el    = document.createElement('div');
+  el.className = 'spark';
+  const size  = Math.random() * 5 + 2;           // 2–7 px
+  const color = SPARK_COLORS[Math.floor(Math.random() * SPARK_COLORS.length)];
+  const angle = Math.random() * Math.PI * 2;
+  const dist  = Math.random() * 22 + 8;           // drift distance
+  const dur   = Math.random() * 300 + 400;        // 400–700 ms
+
+  el.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${x - size / 2}px; top:${y - size / 2}px;
+    background:${color};
+    box-shadow: 0 0 ${size * 2}px ${color};
+    --dx:${(Math.cos(angle) * dist).toFixed(1)}px;
+    --dy:${(Math.sin(angle) * dist - 10).toFixed(1)}px;
+    animation-duration:${dur}ms;
+  `;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), dur);
+}
+
 // Show cursor only after first mouse move (avoids flash at 0,0)
 document.addEventListener('mousemove', e => {
   mx = e.clientX; my = e.clientY;
@@ -31,6 +57,17 @@ document.addEventListener('mousemove', e => {
     cursorVisible = true;
   }
   cursor.style.transform = `translate3d(${mx - 4}px, ${my - 4}px, 0)`;
+
+  // Spawn sparkles — throttled by distance so fast moves get more sparks
+  const dx = mx - lastSparkX, dy = my - lastSparkY;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+  sparkThrottle += dist;
+  if (sparkThrottle > 12) {
+    spawnSpark(mx, my);
+    if (sparkThrottle > 28) spawnSpark(mx, my); // extra spark on fast moves
+    sparkThrottle = 0;
+    lastSparkX = mx; lastSparkY = my;
+  }
 }, { passive: true });
 
 // Silky lerp follower
