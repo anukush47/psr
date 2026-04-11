@@ -2810,3 +2810,62 @@ button:hover~.cursor {
 .edu-card:hover::after {
   opacity: 1;
 }
+
+/* ================================================================
+   MOBILE LAYOUT OVERRIDE — must be LAST in file so it wins over
+   all base-style grid definitions (edu-timeline, research-grid, etc.
+   are defined after the earlier media query block, breaking cascade).
+   ================================================================ */
+@media (max-width: 900px) {
+
+  /* ── Root overflow lock ── */
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  /* ── GRIDS — force single column (overrides all minmax base styles) ── */
+  .edu-timeline   { grid-template-columns: 1fr !important; gap: 1.2rem !important; }
+  .research-grid  { grid-template-columns: 1fr !important; gap: 1.2rem !important; }
+  .projects-grid  { grid-template-columns: 1fr !important; gap: 1.2rem !important; }
+  .about-grid     { grid-template-columns: 1fr !important; gap: 2rem !important; }
+  .contact-grid   { grid-template-columns: 1fr !important; gap: 2rem !important; }
+  .skills-grid    { grid-template-columns: repeat(2, 1fr) !important; gap: 1rem !important; }
+
+  /* ── Featured research card — one column means no spanning needed ── */
+  .research-card.featured { grid-column: 1 !important; }
+
+  /* ── Experience timeline ── */
+  .exp-timeline   { padding-left: 1.5rem !important; }
+  .exp-dot        { left: -2.05rem !important; }
+  .exp-header     { flex-direction: column !important; gap: 0.4rem !important; }
+
+  /* ── Hero ── */
+  .hero {
+    grid-template-columns: 1fr !important;
+    padding: 5.5rem 1.5rem 4rem !important;
+  }
+  .hero-visual, .orbit-system, #robotCanvas { display: none !important; }
+
+  /* ── Nav — always fits in pill ── */
+  .nav-links { display: none !important; }
+  .nav-cta   { display: none !important; }
+  .hamburger { display: flex !important; }
+
+  /* ── Content max-width guards ── */
+  img, video, canvas, iframe, embed, object {
+    max-width: 100% !important;
+  }
+
+  /* ── Ensure flex children don't blow out ── */
+  .hero-cta   { flex-wrap: wrap !important; justify-content: center !important; }
+  .about-tags { justify-content: center !important; }
+  .about-stats { flex-wrap: wrap !important; }
+  .contact-info { width: 100% !important; }
+  .contact-form { width: 100% !important; }
+}
+
+@media (max-width: 500px) {
+  .skills-grid { grid-template-columns: 1fr !important; }
+  .hero-cta .btn { width: 100%; justify-content: center; }
+}
